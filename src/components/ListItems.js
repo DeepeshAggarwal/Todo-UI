@@ -16,7 +16,6 @@ class List extends Component {
 
   addTask = function(event) {
     event.preventDefault();
-    console.log(event);
     this.setState({
       addTask : !this.state.addTask
     })
@@ -30,7 +29,7 @@ class List extends Component {
 
         {this.state.addTask
           ? <Row className="item-height font-20 padding-top-2 task">
-              <AddTask/>
+              <AddTask cancel={true} onClick={this.addTask}/>
             </Row>
           : <Row className="item-height margin-top-20 task show-grid">
             <Col xs={11} className="padding-left-20 pointer" onClick={this.addTask}>

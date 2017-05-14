@@ -59,6 +59,7 @@ class AddTask extends Component {
         </Row>
         <Row className="show-grid margin-top-10">
            <Button bsStyle="danger">Add Task</Button>
+           {this.props.cancel ? <Button bsStyle="danger" onClick={this.props.onClick}>Cancel</Button> : null}
         </Row>
       </div>
     )

@@ -15,7 +15,7 @@ class AddTaskModal extends Component {
           <Row className="show-grid">
             <Col xs={1} />
             <Col xs={10}>
-              <AddTask/>
+              <AddTask cancel={false}/>
             </Col>
             <Col xs={1} />
           </Row>

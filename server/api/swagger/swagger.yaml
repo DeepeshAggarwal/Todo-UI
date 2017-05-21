@@ -1,0 +1,82 @@
+swagger: "2.0"
+
+################################################################################
+#                              API Information                                 #
+################################################################################
+info:
+  version: "1.0.0"
+  title: Macys DataGenerator Rest API
+host: localhost:3001
+basePath: /
+schemes:
+  - http
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+
+################################################################################
+#                                 Paths                                        #
+################################################################################
+paths:
+  /signIn:
+    x-swagger-router-controller: sign
+    post:
+      description: Validate the user credentials to access the UI console
+      parameters:
+        - name: user
+          in: body
+          description: User credentials
+          schema:
+            $ref: '#/definitions/User'
+          required: true
+      tags:
+        - Sign
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        200:
+          description: User Credentials Matched
+  /signUp:
+    x-swagger-router-controller: sign
+    post:
+      description: Register new user to provide access to UI Console
+      parameters:
+        - name: user
+          in: body
+          description: User credentials
+          schema:
+            $ref: '#/definitions/User'
+          required: true
+      tags:
+        - Sign
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        200:
+          description: User Registered
+
+  /swagger:
+      x-swagger-pipe: swagger_raw
+
+################################################################################
+#                                   Models                                     #
+################################################################################
+definitions:
+  Error:
+      type: object
+      properties:
+        message:
+          type: string
+  User:
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string

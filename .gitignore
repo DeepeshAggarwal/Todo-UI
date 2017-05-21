@@ -2,6 +2,9 @@
 
 # dependencies
 UI/node_modules
+server/node_modules
+server/logs
+server/tests
 
 # testing
 UI/coverage

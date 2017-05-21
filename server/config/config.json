@@ -1,0 +1,9 @@
+{
+    "development": {
+        "host": "localhost",
+        "port": "27017",
+        "database": "todo",
+        "username": "root",
+        "password": "root"
+    }
+}

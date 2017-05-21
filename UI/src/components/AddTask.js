@@ -24,33 +24,47 @@ class AddTask extends Component {
       disabled: false
     };
     this.onChange = this.onChange.bind(this);
+    this.onTaskChange = this.onTaskChange.bind(this);
+    this.createTask = this.createTask.bind(this);
+
   }
 
-  onChange = function(value) {
-    console.log(value);
-    this.setState({'value': value}, () => {
-      // var moment = this.state.value;
-      // console.log(moment.utc().format());
-      console.log(this.state.value);
+  onChange = function(date) {
+    console.log(date);
+    this.setState({
+      'date': date
+    }, () => {
+      var moment = this.state.date;
+      console.log(moment.toDate());
     })
+  }
+
+  onTaskChange = function(event) {
+    const value = event.target.value;
+    this.setState({'task': value});
+  }
+
+  createTask = function() {
+    if (this.props.cancel) {
+      this.props.onClick();
+    }
+    this.props.createTask({"name": this.state.task, "isCompleted": false, "date_added": new Date(), "due_date_utc": this.state.date.toDate()})
   }
 
   render() {
     var state = this.state;
-    const calendar = (<Calendar
-      style={{ zIndex: 5000 }}
-      disabledTime={null}
-      timePicker={null}
-      showDateInput={state.showDateInput}/>);
+    const calendar = (<Calendar style={{
+      zIndex: 5000
+    }} disabledTime={null} timePicker={null} showDateInput={state.showDateInput}/>);
     return (
       <div>
         <Row className="show-grid">
           <Col xs={10} className="no-padding">
-            <FormControl type="text" placeholder="Enter text" className="full-width no-border-radius show-border"/>
+            <FormControl type="text" placeholder="Enter text" className="full-width no-border-radius show-border" onChange={this.onTaskChange}/>
           </Col>
           <Col xs={2} className="no-padding  align-center">
 
-            <DatePicker animation="slide-up" calendar={calendar} value={state.value} onChange={this.onChange}>
+            <DatePicker animation="slide-up" calendar={calendar} value={state.date} onChange={this.onChange}>
               {({value}) => {
                 return (<FormControl type="text" placeholder="Schedule" className="full-width calendar no-border-radius show-border ant-calendar-picker-input ant-input" value={(value && value.format(getFormat(state.showTime))) || ''}/>);
               }}
@@ -58,8 +72,10 @@ class AddTask extends Component {
           </Col>
         </Row>
         <Row className="show-grid margin-top-10">
-           <Button bsStyle="danger">Add Task</Button>
-           {this.props.cancel ? <Button bsStyle="danger" onClick={this.props.onClick}>Cancel</Button> : null}
+          <Button bsStyle="danger" onClick={this.createTask}>Add Task</Button>
+          {this.props.cancel
+            ? <Button bsStyle="danger" className="margin-left-10" onClick={this.props.onClick}>Cancel</Button>
+            : null}
         </Row>
       </div>
     )

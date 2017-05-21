@@ -8,7 +8,7 @@ class Item extends Component {
     super(props);
     this.handleClick = this.handleClick.bind(this);
     this.state = {
-      filter : props.title
+      title : props.title
     }
   }
 

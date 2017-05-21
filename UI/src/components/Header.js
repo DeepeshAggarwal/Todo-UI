@@ -18,7 +18,7 @@ class Header extends Component {
   }
 
   closeAddTaskModal = function(event) {
-    event.preventDefault();
+    // event.preventDefault();
     this.setState({showAddTaskModal: false})
   }
 
@@ -48,7 +48,7 @@ class Header extends Component {
               <Col xs={5}></Col>
               <Col xs={1} className="center-padding">
                 <Glyphicon className="pointer" onClick={this.showAddTaskModal} glyph="glyphicon glyphicon-plus" />
-                <AddTaskModal show={this.state.showAddTaskModal} onHide={this.closeAddTaskModal} />
+                <AddTaskModal show={this.state.showAddTaskModal} onHide={this.closeAddTaskModal} createTask={this.props.createTask} />
               </Col>
               <Col xs={1} className="center-padding">
                 <Glyphicon glyph="glyphicon glyphicon-cog"/>

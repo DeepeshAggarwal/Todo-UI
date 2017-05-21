@@ -5,7 +5,7 @@ swagger: "2.0"
 ################################################################################
 info:
   version: "1.0.0"
-  title: Macys DataGenerator Rest API
+  title: TODO REST API
 host: localhost:3001
 basePath: /
 schemes:

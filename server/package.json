@@ -2,7 +2,7 @@
   "name": "MyStaticServer",
   "version": "1.0.0",
   "license": "MIT",
-  "repository": "Json Data Generator",
+  "repository": "TODO App",
   "author": "deepesh.aggarwal@macys.com",
   "dependencies": {
     "body-parser": "1.15.2",

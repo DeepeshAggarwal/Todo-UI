@@ -1,7 +1,7 @@
 'use strict';
 
 var express = require("express"),
-  logger = require('./api/lib/logger.js').get('app'),
+  logger = require('./src/lib/logger.js').get('app'),
   bodyParser = require("body-parser"),
   SwaggerUi = require('swagger-tools/middleware/swagger-ui'),
   open = require("opn"),
@@ -11,7 +11,8 @@ var app = express();
 module.exports = app;
 
 var config = {
-  appRoot: __dirname // required config
+  appRoot: __dirname, // required config
+  swaggerFile:`${__dirname}/src/swagger/swagger.yaml` // swagger config file location
 };
 
 SwaggerExpress.create(config, function(err, swaggerExpress) {
@@ -30,7 +31,7 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(SwaggerUi(swaggerExpress.runner.swagger));
 
-    var routes = require("./api/routes/routes.js")(app);
+    var routes = require("./src/routes/routes.js")(app);
     swaggerExpress.register(app);
 
     var port = process.env.PORT || 3001;

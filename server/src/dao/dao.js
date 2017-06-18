@@ -1,7 +1,6 @@
 'use strict';
 
 var pw = require("credential")(),
-    constants = require("./../lib/constants.js"),
     mongoose = require("./../models"),
     logger = require('./../lib/logger.js').get('dao');
 

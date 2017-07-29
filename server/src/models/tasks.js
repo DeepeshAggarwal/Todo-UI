@@ -4,7 +4,7 @@ var Tasks = new Schema({
     name        : String
   , isCompleted : Boolean
   , date_added  : { type: Date, default: Date.now }
-  , due_date_utc: Date
+  , due_date    : { type: Date, default: Date.now }
 });
 mongoose.model("Tasks", Tasks);
 

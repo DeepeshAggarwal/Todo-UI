@@ -4,39 +4,42 @@ var util = require('./../lib/util.js'),
     taskService = require('./../services/taskService.js'),
     logger = require('./../lib/logger.js').get('taskController');
 
-function createTask(body, res) {
+function createTask(userId, task, res) {
     logger.info("Entering createTask");
-    util.validateRequest(body, body, function (err) {
+    util.validateRequest(task, task, function (err) {
         if (err) {
             return res.status(400).send("Invalid Request");
         }
-        taskService.createTask(body, function (err, result) {
+        taskService.createTask(userId, task, function (err, result) {
             if (err) {
                 logger.error(err);
                 var error = {'message': err.message};
-                res.status(400).send(error)
+                res.status(500).send(error)
             }
             logger.info(result);
-            res.send();
+            res.send(result);
         });
     });
 
 }
 
-function getTasks(body, res) {
-    logger.info("Entering signUp");
+function getTask(userId, taskId, res) {
+    logger.info("Entering getTask for user, task", userId, taskId);
     util.validateRequest(body.email, body.password, function (err) {
         if (err) {
             return res.status(400).send("Invalid Request");
         }
-        signService.signUp(body.email, body.password, function (err, result) {
-            if (err) {
-                var error = {'message': err.message};
-                res.status(400).send(error)
-            }
-            logger.info(result);
-            res.status(201).send();
-        });
+        res.send(200).send("Api under construction")
+    });
+}
+
+function getTasks(userId, res) {
+    logger.info("Entering getTasks for user", userId);
+    util.validateRequest(body.email, body.password, function (err) {
+        if (err) {
+            return res.status(400).send("Invalid Request");
+        }
+        res.send(200).send("Api under construction")
     });
 }
 

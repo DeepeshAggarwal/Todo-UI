@@ -9,7 +9,7 @@ class Filter {
     let today = new Date();
     today = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
     for (var task in tasks) {
-      let taskDate = new Date(tasks[task].due_date_utc);
+      let taskDate = new Date(tasks[task].due_date);
       taskDate = Date.UTC(taskDate.getFullYear(), taskDate.getMonth(), taskDate.getDate());
       if(taskDate === today)
          filteredTasks.push(tasks[task]);
@@ -28,7 +28,7 @@ class Filter {
     let weekEnd = Date.UTC(week.getFullYear(), week.getMonth(), week.getDate());
 
     for (var task in tasks) {
-      let taskDate = new Date(tasks[task].due_date_utc);
+      let taskDate = new Date(tasks[task].due_date);
       taskDate = Date.UTC(taskDate.getFullYear(), taskDate.getMonth(), taskDate.getDate());
       if(taskDate >= weekStart && taskDate <= weekEnd)
          filteredTasks.push(tasks[task]);

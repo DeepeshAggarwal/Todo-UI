@@ -60,7 +60,80 @@ paths:
             $ref: '#/definitions/Error'
         200:
           description: User Registered
-
+  /user/{userId}/task/{id}:
+    x-swagger-router-controller: task
+    get:
+      description: Get the Task information for the Task Id for User userId
+      parameters:
+        - name: id
+          in: path
+          description: Task Id
+          required: true
+          type: "integer"
+        - name: userId
+          in: path
+          description: User Id
+          required: true
+          type: "integer"
+      tags:
+        - Task
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        200:
+          description: Task Information
+          schema:
+            $ref: '#/definitions/Task'
+  /user/{userId}/tasks:
+    x-swagger-router-controller: task
+    get:
+      description: Get All Tasks for User userId
+      parameters:
+        - name: userId
+          in: path
+          description: User Id
+          required: true
+          type: "integer"
+      tags:
+        - Task
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        200:
+          description: All Task Retrived
+          schema:
+            $ref: '#/definitions/Tasks'
+  /user/{userId}/task:
+    x-swagger-router-controller: task
+    post:
+      description: Create a new task for User userId
+      parameters:
+        - name: task
+          in: body
+          description: Task Details
+          schema:
+            $ref: '#/definitions/Task'
+          required: true
+        - name: userId
+          in: path
+          description: User Id
+          required: true
+          type: "integer"
+      tags:
+        - Task
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        200:
+          description: New Task Created
+          schema:
+            $ref: '#/definitions/NewTask'
   /swagger:
       x-swagger-pipe: swagger_raw
 
@@ -80,3 +153,36 @@ definitions:
         type: string
       password:
         type: string
+  Task:
+    type: object
+    properties:
+      name:
+        type: string
+      isCompleted:
+        type: boolean
+      date_added:
+        type: string
+        format: date-time
+      due_date:
+        type: string
+        format: date-time
+  NewTask:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      isCompleted:
+        type: boolean
+      date_added:
+        type: string
+        format: date-time
+      due_date:
+        type: string
+        format: date-time
+
+  Tasks:
+    type: array
+    items:
+      $ref: '#/definitions/NewTask'

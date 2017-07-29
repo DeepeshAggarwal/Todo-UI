@@ -48,8 +48,21 @@ function signUp(email, password, next) {
     });
 }
 
+function createTask(userId, task, next) {
+    logger.info('entered createTask', userId, task);
+    // Confirm the userId exists
+    var Task = mongoose.model("Tasks");
+    var tasks = new Task(task);
+    tasks.save(function (err, result) {
+        if (err) return next(err);
+        else
+            return next(undefined, result);
+    });
+}
+
 
 module.exports = {
     signIn: signIn,
-    signUp: signUp
+    signUp: signUp,
+    createTask: createTask
 };

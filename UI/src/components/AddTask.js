@@ -48,7 +48,7 @@ class AddTask extends Component {
     if (this.props.cancel) {
       this.props.onClick();
     }
-    this.props.createTask({"name": this.state.task, "isCompleted": false, "date_added": new Date(), "due_date_utc": this.state.date.toDate()})
+    this.props.createTask({"name": this.state.task, "isCompleted": false, "date_added": new Date(), "due_date": this.state.date.toDate()})
   }
 
   render() {

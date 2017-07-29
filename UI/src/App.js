@@ -18,9 +18,9 @@ class App extends Component {
         {'title': 'Today', 'logo' : 'glyphicon glyphicon-calendar'},
         {'title': 'This Week', 'logo' : 'glyphicon glyphicon-calendar'}],
       tasks:[
-        {"name":"Test", "isCompleted":false, "date_added": "Tue 25 Apr 2017 17:58:08 +0000", "due_date_utc" : "Sun 30 Apr 2017 06:59:59 +0000"},
-        {"name":"Test", "isCompleted":false, "date_added": "Wed 26 Apr 2017 17:58:08 +0000", "due_date_utc" : "Tue 18 Apr 2017 07:59:59 +0000"},
-        {"name":"Test", "isCompleted":false, "date_added": "Wed 26 Apr 2017 17:58:08 +0000", "due_date_utc" : "Tue May 23 2017 17:42:18 -0700"}
+        {"name":"Test", "isCompleted":false, "date_added": "Tue 25 Apr 2017 17:58:08 +0000", "due_date" : "Sun 30 Apr 2017 06:59:59 +0000"},
+        {"name":"Test", "isCompleted":false, "date_added": "Wed 26 Apr 2017 17:58:08 +0000", "due_date" : "Tue 18 Apr 2017 07:59:59 +0000"},
+        {"name":"Test", "isCompleted":false, "date_added": "Wed 26 Apr 2017 17:58:08 +0000", "due_date" : "Tue May 23 2017 17:42:18 -0700"}
       ],
       "currentFilter" : {
         'title': 'Inbox'

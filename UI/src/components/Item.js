@@ -32,7 +32,7 @@ class Item extends Component {
         <Col sm={1}><img src={Circle} alt="done" /></Col>
         <Col sm={11} >
           <span className="font-16 taskName">{this.props.task.name}</span>
-          <CalculateDay taskDue={this.props.task.due_date_utc} />
+          <CalculateDay taskDue={this.props.task.due_date} />
         </Col>
       </Row>
     );

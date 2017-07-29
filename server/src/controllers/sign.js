@@ -17,7 +17,7 @@ function signIn(body, res) {
                 res.status(400).send(error)
             }
             logger.info(result);
-            res.send();
+            res.send(result);
         });
     });
 
@@ -34,8 +34,9 @@ function signUp(body, res) {
                 var error = {'message': err.message};
                 res.status(400).send(error)
             }
-            logger.info(result);
-            res.status(201).send();
+            logger.info(delete result.password);
+            // result = delete result.password;
+            res.status(201).send(result);
         });
     });
 }

@@ -11,7 +11,13 @@ function signUp(email, password, next) {
     dao.signUp(email, password, next);
 }
 
+function userExists(userId, next) {
+    dao.userExists(userId, next);
+}
+
+
 module.exports = {
     signIn: signIn,
-    signUp: signUp
+    signUp: signUp,
+    userExists : userExists
 }

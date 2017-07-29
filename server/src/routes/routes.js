@@ -25,7 +25,7 @@ var appRouter = function (app) {
     });
 
     app.get("/user/:userId/tasks", function(req, res) {
-        taskController.getTask(req.params.userId, res);
+        taskController.getTasks(req.params.userId, res);
     })
 
 };

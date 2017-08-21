@@ -13,16 +13,17 @@ class App extends Component {
     // Made this ask object as combination of title and task associated with it
     super(props);
     this.state = {
+      'authenticated': false,
       filters: [
         {'title': 'Inbox', 'logo':'glyphicon glyphicon-inbox'},
         {'title': 'Today', 'logo' : 'glyphicon glyphicon-calendar'},
         {'title': 'This Week', 'logo' : 'glyphicon glyphicon-calendar'}],
       tasks:[
-        {"name":"Test", "isCompleted":false, "date_added": "Tue 25 Apr 2017 17:58:08 +0000", "due_date" : "Sun 30 Apr 2017 06:59:59 +0000"},
-        {"name":"Test", "isCompleted":false, "date_added": "Wed 26 Apr 2017 17:58:08 +0000", "due_date" : "Tue 18 Apr 2017 07:59:59 +0000"},
-        {"name":"Test", "isCompleted":false, "date_added": "Wed 26 Apr 2017 17:58:08 +0000", "due_date" : "Tue May 23 2017 17:42:18 -0700"}
+        {'name':'Test', 'isCompleted':false, 'date_added': 'Tue 25 Apr 2017 17:58:08 +0000', 'due_date' : 'Sun 30 Apr 2017 06:59:59 +0000'},
+        {'name':'Test', 'isCompleted':false, 'date_added': 'Wed 26 Apr 2017 17:58:08 +0000', 'due_date' : 'Tue 18 Apr 2017 07:59:59 +0000'},
+        {'name':'Test', 'isCompleted':false, 'date_added': 'Wed 26 Apr 2017 17:58:08 +0000', 'due_date' : 'Tue May 23 2017 17:42:18 -0700'}
       ],
-      "currentFilter" : {
+      'currentFilter' : {
         'title': 'Inbox'
       }
     };
@@ -45,15 +46,19 @@ class App extends Component {
     this.changeFilter(this.state.currentFilter);
   }
 
+  toogleAuthentication = function(isAuthenticated) {
+    this.setState({'authenticated' : isAuthenticated})
+  }
+
 
   render() {
     return (
       <div>
         <Header createTask={this.createTask}/>
         <Grid>
-          <Row className="show-grid">
-            <Col xs={6} md={4} className="left" id="list"><ListFilters items={this.state.filters} onClick={this.changeFilter}/></Col>
-            <Col xs={12} md={8} className="right"> <ListItems tasks={this.state.tasks} heading={this.state.currentFilter} createTask={this.createTask}/> </Col>
+          <Row className='show-grid'>
+            <Col xs={6} md={4} className='left' id='list'><ListFilters items={this.state.filters} onClick={this.changeFilter}/></Col>
+            <Col xs={12} md={8} className='right'> <ListItems tasks={this.state.tasks} heading={this.state.currentFilter} createTask={this.createTask}/> </Col>
           </Row>
         </Grid>
       </div>

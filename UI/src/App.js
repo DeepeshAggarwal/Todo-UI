@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
-import Header from './components/Header.js';
-import ListFilters from './components/ListFilters.js'
-import ListItems from './components/ListItems.js'
+import Header from './components/Header';
+import ListFilters from './components/ListFilters'
+import ListItems from './components/ListItems'
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
-import FilterTask from './operations/Filter.js'
+import FilterTask from './operations/Filter'
 class App extends Component {
 
   constructor(props) {

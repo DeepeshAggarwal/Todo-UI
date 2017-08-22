@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Button from 'react-bootstrap/lib/Button';
 import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
+import Ajax from '../lib/AjaxHelper';
 
 function FieldGroup({ id, label, help, ...props }) {
   return (
@@ -15,76 +16,57 @@ class SignUpForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: null,
       email: null,
       password: null,
       confirmPassword: null,
-      statesValue: null,
-      forbiddenWords: ["password", "user", "username"]
+      error: null
     }
+    this.handleUserInput = this.handleUserInput.bind(this);
+    this.handlePasswordInput = this.handlePasswordInput.bind(this);
+    this.handleEmailInput = this.handleEmailInput.bind(this);
+    this.saveAndContinue = this.saveAndContinue.bind(this);
+    this.handleError = this.handleError.bind(this);
+
   }
 
-  // handlePasswordInput = function(event) {
-  //   this.setState({password: event.target.value});
-  // }
-  //
-  // handleConfirmPasswordInput = function(event) {
-  //   this.setState({confirmPassword: event.target.value});
-  // }
-  //
-  // saveAndContinue = function(e) {
-  //   e.preventDefault();
-  //
-  //   var canProceed = this.validateEmail(this.state.email) && this.refs.password.isValid() && this.refs.passwordConfirm.isValid();
-  //
-  //   if (canProceed) {
-  //     var data = {
-  //       email: this.state.email,
-  //       state: this.state.statesValue
-  //     }
-  //     alert('Thanks.');
-  //   } else {
-  //     this.refs.email.isValid();
-  //     this.refs.state.isValid();
-  //     this.refs.companyName.isValid();
-  //     this.refs.password.isValid();
-  //     this.refs.passwordConfirm.isValid();
-  //   }
-  // }
-  //
-  // isConfirmedPassword = function(event) {
-  //   return (event == this.state.password)
-  // }
-  //
-  // handleCompanyInput = function(event) {
-  //   this.setState({companyName: event.target.value})
-  // }
-  //
-  // handleEmailInput = function(event) {
-  //   this.setState({email: event.target.value});
-  // }
-  //
-  // validateEmail = function(event) {
-  //   // regex from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
-  //   var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  //   return re.test(event);
-  // }
-  //
-  // isEmpty = function(value) {
-  //   return value === undefined && value.lenght === 0;
-  // }
-  //
-  // updateStatesValue = function(value) {
-  //   this.setState({statesValue: value})
-  // }
+  handleUserInput = function(event) {
+    this.setState({user: event.target.value});
+  }
+
+  handlePasswordInput = function(event) {
+    this.setState({password: event.target.value});
+  }
+
+  handleEmailInput = function(event) {
+    this.setState({email: event.target.value, error: null});
+  }
+
+  handleError = function(jqXHR, status, errorThrown) {
+      this.setState({error: jqXHR.responseJSON.message});
+  }
+
+  saveAndContinue = function(event) {
+      event.preventDefault();
+      console.log(this.state);
+      let request = {
+          'email': this.state.email,
+          'password': this.state.password
+      }
+      Ajax.firePostRequest('http://localhost:3001/signUp', request, function(response) {
+        console.log("Success", response);
+      }, this.handleError);
+  }
 
   render() {
     return (
       <div className="create_account_screen">
         <div className="create_account_form">
-          <form>
-            <FieldGroup id="formControlsText" type="text" label="Username" placeholder="Enter username"/>
-            <FieldGroup id="formControlsEmail" type="email" label="Email address" placeholder="Enter email"/>
-            <FieldGroup id="formControlsPassword" label="Password" type="password" placeholder="Enter password"/>
+          {this.state.error}
+          <form onSubmit={this.saveAndContinue}>
+            <FieldGroup id="formControlsText" type="text" label="Username" placeholder="Enter username" onChange={this.handleUserInput} />
+            <FieldGroup id="formControlsEmail" type="email" label="Email address" placeholder="Enter email" onChange={this.handleEmailInput}/>
+            <FieldGroup id="formControlsPassword" label="Password" type="password" placeholder="Enter password" onChange={this.handlePasswordInput}/>
 
             <Button type="submit">
               Submit

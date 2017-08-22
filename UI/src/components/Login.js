@@ -38,7 +38,7 @@ class Login extends Component {
       		<Col xs={12}>
             <Jumbotron>
               <h1>Hi, Welcome to your task list!</h1>
-              <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+              <p>Always stay on top of your task and retrieve it any where from any device.</p>
               <p><Button bsStyle='primary'>Learn more</Button></p>
             </Jumbotron>
       		</Col>

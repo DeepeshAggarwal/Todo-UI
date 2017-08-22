@@ -30,9 +30,9 @@ function signUp(email, password, next) {
     logger.info('entered saveUser', email);
     var User = mongoose.model('Users');
     User.findOne({'email': email}, function(err, result) {
+        logger.debug(result, next);
         if (err)
             return next(err);
-        logger.debug(result);
         if (result) {
             logger.info('User already exists');
             return next(new Error('User with this email already exists'));

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import Login from './components/Login.js';
+import Login from './components/Login';
 import './index.css';
 import { BrowserRouter as Router, Route, hashHistory } from 'react-router-dom'
 

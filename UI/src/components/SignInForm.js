@@ -15,6 +15,7 @@ function FieldGroup({ id, label, help, ...props }) {
 class SignInForm extends Component {
   constructor(props) {
     super(props);
+    console.log(props.onSuccess);
     this.state = {
       email: null,
       password: null,
@@ -24,6 +25,7 @@ class SignInForm extends Component {
     this.handleEmailInput = this.handleEmailInput.bind(this);
     this.saveAndContinue = this.saveAndContinue.bind(this);
     this.handleError = this.handleError.bind(this);
+    this.signInSuccess = this.signInSuccess.bind(this);
   }
 
   handlePasswordInput = function(event) {
@@ -38,24 +40,27 @@ class SignInForm extends Component {
       this.setState({error: jqXHR.responseJSON.message});
   }
 
+  signInSuccess = function(response) {
+      this.props.onSuccess(response);
+  }
+
   saveAndContinue = function(event) {
       event.preventDefault();
       let request = {
           'email': this.state.email,
           'password': this.state.password
       }
-      Ajax.firePostRequest('http://localhost:3001/signIn', request, function(response) {
-        console.log("Success", response);
-      }, this.handleError);
+      Ajax.firePostRequest('http://localhost:3001/signIn', request, this.signInSuccess, this.handleError);
   }
 
   render() {
     return (
       <div className="create_account_screen">
         <div className="create_account_form">
+          {this.state.error}<br />
           <form onSubmit={this.saveAndContinue}>
-            <FieldGroup id="formControlsText" type="text" label="Username/Email address" placeholder="Enter username/email"/>
-            <FieldGroup id="formControlsPassword" label="Password" type="password" placeholder="Enter password"/>
+            <FieldGroup id="formControlsText" type="text" label="Username/Email address" placeholder="Enter username/email" onChange={this.handleEmailInput} />
+            <FieldGroup id="formControlsPassword" label="Password" type="password" placeholder="Enter password" onChange={this.handlePasswordInput} />
             <Button type="submit">
               Submit
             </Button>

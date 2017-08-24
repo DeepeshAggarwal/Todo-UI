@@ -7,6 +7,7 @@ class SignModal extends Component {
 
   constructor(props) {
     super(props);
+    console.log(props.onSuccess);
     this.state = {
         'form' : props.showSignInModal || props.showSignUpModal
     }
@@ -17,10 +18,10 @@ class SignModal extends Component {
     let form = null
     let heading = null
     if (this.state.form === 'signIn') {
-        form = <SignInForm />
+        form = <SignInForm onSuccess={this.props.onSuccess} />
         heading = 'Sign In'
     }else {
-        form = <SignUpForm />
+        form = <SignUpForm onSuccess={this.props.onSuccess}/>
         heading = 'Sign Up'
     }
     return (

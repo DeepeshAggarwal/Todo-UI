@@ -4,13 +4,14 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Jumbotron from  'react-bootstrap/lib/Jumbotron';
 import Button from 'react-bootstrap/lib/Button';
-import SignHeader from './SignHeader';
+import Header from './Header';
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.closeAddTaskModal = this.closeAddTaskModal.bind(this);
     this.showAddTaskModal = this.showAddTaskModal.bind(this);
+    this.signSuccess = this.signSuccess.bind(this);
     this.state = {
       'showAddTaskModal': false
     }
@@ -26,12 +27,16 @@ class Login extends Component {
     this.setState({showAddTaskModal: true})
   }
 
+  signSuccess = function(response) {
+    console.log('sign success', response);
+  }
+
   render() {
     return (
       <Grid>
         <Row>
           <Col xs={12}>
-            <SignHeader />
+            <Header onSuccess={this.signSuccess}/>
           </Col>
         </Row>
       	<Row>

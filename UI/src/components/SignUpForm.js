@@ -27,6 +27,7 @@ class SignUpForm extends Component {
     this.handleEmailInput = this.handleEmailInput.bind(this);
     this.saveAndContinue = this.saveAndContinue.bind(this);
     this.handleError = this.handleError.bind(this);
+    this.signUpSuccess = this.signUpSuccess.bind(this);
 
   }
 
@@ -46,6 +47,10 @@ class SignUpForm extends Component {
       this.setState({error: jqXHR.responseJSON.message});
   }
 
+  signUpSuccess = function(response) {
+      this.props.onSuccess(response);
+  }
+
   saveAndContinue = function(event) {
       event.preventDefault();
       console.log(this.state);
@@ -53,9 +58,7 @@ class SignUpForm extends Component {
           'email': this.state.email,
           'password': this.state.password
       }
-      Ajax.firePostRequest('http://localhost:3001/signUp', request, function(response) {
-        console.log("Success", response);
-      }, this.handleError);
+      Ajax.firePostRequest('http://localhost:3001/signUp', request, this.signUpSuccess, this.handleError);
   }
 
   render() {

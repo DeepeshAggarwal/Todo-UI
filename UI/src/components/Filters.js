@@ -13,7 +13,7 @@ class Item extends Component {
   }
 
   handleClick = function(event) {
-    console.log(this);
+    console.log(this.state);
     event.preventDefault();
     this.props.onClick(this.state)
   }

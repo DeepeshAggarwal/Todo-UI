@@ -10,7 +10,6 @@ import SignModal from './SignModal';
 
 class Header extends Component {
   constructor(props) {
-    console.log(props.onSuccess);
     super(props);
     this.closeAddTaskModal = this.closeAddTaskModal.bind(this);
     this.showAddTaskModal = this.showAddTaskModal.bind(this);

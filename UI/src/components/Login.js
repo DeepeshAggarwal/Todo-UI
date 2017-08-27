@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
-import Grid from 'react-bootstrap/lib/Grid';
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
-import Jumbotron from  'react-bootstrap/lib/Jumbotron';
-import Button from 'react-bootstrap/lib/Button';
+import {Grid, Row, Col, Jumbotron, Button} from 'react-bootstrap'
 import Header from './Header';
+import { withRouter } from 'react-router';
 
 class Login extends Component {
   constructor(props) {
@@ -29,6 +26,11 @@ class Login extends Component {
 
   signSuccess = function(response) {
     console.log('sign success', response);
+    this.props.history.push({
+      pathname: '/home',
+      state: response
+    });
+    // this.history.pushState(null, '');
   }
 
   render() {
@@ -53,4 +55,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);

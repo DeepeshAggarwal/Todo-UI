@@ -15,7 +15,6 @@ function FieldGroup({ id, label, help, ...props }) {
 class SignInForm extends Component {
   constructor(props) {
     super(props);
-    console.log(props.onSuccess);
     this.state = {
       email: null,
       password: null,

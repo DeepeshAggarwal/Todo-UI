@@ -6,59 +6,88 @@ import ListItems from './components/ListItems'
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
-import FilterTask from './operations/Filter'
+import FilterTask from './lib/Filter'
+import ContentLoader, { Rect } from 'react-content-loader'
+import Ajax from './lib/AjaxHelper';
+
+const MyLoader = () => {
+  return(
+    <ContentLoader height={50} speed={2} primaryColor={'#eeeeee'} secondaryColor={'#999'}>
+      <Rect x={0} y={10} height={10} radius={5} width={'100%'} />
+    </ContentLoader>
+  )
+}
+
 class App extends Component {
 
   constructor(props) {
     // Made this ask object as combination of title and task associated with it
+    if (!props.location.state.id) {
+        props.history.push('index');
+    }
     super(props);
     this.state = {
-      'authenticated': false,
+      id: props.location.state.id,
       filters: [
         {'title': 'Inbox', 'logo':'glyphicon glyphicon-inbox'},
         {'title': 'Today', 'logo' : 'glyphicon glyphicon-calendar'},
         {'title': 'This Week', 'logo' : 'glyphicon glyphicon-calendar'}],
-      tasks:[
-        {'name':'Test', 'isCompleted':false, 'date_added': 'Tue 25 Apr 2017 17:58:08 +0000', 'due_date' : 'Sun 30 Apr 2017 06:59:59 +0000'},
-        {'name':'Test', 'isCompleted':false, 'date_added': 'Wed 26 Apr 2017 17:58:08 +0000', 'due_date' : 'Tue 18 Apr 2017 07:59:59 +0000'},
-        {'name':'Test', 'isCompleted':false, 'date_added': 'Wed 26 Apr 2017 17:58:08 +0000', 'due_date' : 'Tue May 23 2017 17:42:18 -0700'}
-      ],
       'currentFilter' : {
         'title': 'Inbox'
-      }
+      },
+      loaded: false
     };
     this.tasks = this.state.tasks;
     this.changeFilter = this.changeFilter.bind(this);
     this.createTask = this.createTask.bind(this);
   }
 
+  componentDidMount = function () {
+      const url = 'http://localhost:3001/user/' + this.state.id + '/tasks';
+      Ajax.fireGetRequest(url, (response)=> {
+        this.setState({'tasks':response, loaded:true}, ()=>{
+          this.tasks = this.state.tasks;
+        })
+      }, (response)=> {
+        this.setState({loaded:true})
+        console.log(response.responseJSON.message)
+      });
+  }
+
   changeFilter = function(filter) {
     this.setState({'currentFilter' : filter}, () => {
-      this.setState({tasks: FilterTask.filter(this.tasks, this.state.currentFilter)}, ()=> {
-        console.log(this.state);
-      });
+      this.setState({tasks: FilterTask.filter(this.tasks, this.state.currentFilter)});
     })
   }
 
   createTask = function(task) {
     console.log(task);
-    this.tasks.push(task);
-    this.changeFilter(this.state.currentFilter);
-  }
-
-  toogleAuthentication = function(isAuthenticated) {
-    this.setState({'authenticated' : isAuthenticated})
+    const url = 'http://localhost:3001/user/' + this.state.id + '/task';
+    Ajax.firePostRequest(url, task, (response)=> {
+      this.tasks.push(task);
+      this.changeFilter(this.state.currentFilter);
+    }, (response)=> {
+      console.log(response.responseJSON.message)
+    });
   }
 
 
   render() {
+    var taskList = null;
+    if (this.state.loaded) {
+        taskList = <ListItems tasks={this.state.tasks} heading={this.state.currentFilter} createTask={this.createTask}/>
+    } else {
+        taskList = <MyLoader />
+    }
     return (
       <div>
-        <Header createTask={this.createTask}/>
+        <Header createTask={this.createTask} signedIn='true'/>
         <Grid>
           <Row className='show-grid'>
             <Col xs={6} md={4} className='left' id='list'><ListFilters items={this.state.filters} onClick={this.changeFilter}/></Col>
-            <Col xs={12} md={8} className='right'> <ListItems tasks={this.state.tasks} heading={this.state.currentFilter} createTask={this.createTask}/> </Col>
+            <Col xs={12} md={8} className='right'>
+                {taskList}
+            </Col>
           </Row>
         </Grid>
       </div>

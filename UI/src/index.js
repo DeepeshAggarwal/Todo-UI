@@ -7,7 +7,10 @@ import { BrowserRouter as Router, Route, hashHistory } from 'react-router-dom'
 
 ReactDOM.render(
   (<Router history={hashHistory}>
-        <Route path="/" component={Login}/>
+      <div>
+        <Route path="/index" component={Login}/>
+        <Route path="/home" component={App}/>
+      </div>
   </Router>),
   document.getElementById('root')
 );

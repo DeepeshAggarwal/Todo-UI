@@ -7,7 +7,6 @@ class SignModal extends Component {
 
   constructor(props) {
     super(props);
-    console.log(props.onSuccess);
     this.state = {
         'form' : props.showSignInModal || props.showSignUpModal
     }

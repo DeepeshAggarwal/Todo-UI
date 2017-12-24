@@ -1,0 +1,13 @@
+1. To Show Collections
+  show collections;
+2. To limit find
+  find().limit(n);
+  findOne();
+3. To print pretty:
+  find().pretty();
+4. To Update
+  db.users.update({}, {$set : {"name":"deepesh"}}, false, true)
+  false : Upsert Flag
+  true : Multi Flag
+5. Create Collections
+  db.createCollection("collection name")

@@ -28,7 +28,20 @@ function getTasks(userId, next) {
     });
 }
 
+function getTask(userId, taskId, next) {
+    signService.userExists(userId, function(err, result) {
+          if(err) {
+              next(err)
+          } else if(!result || !result._id) {
+              next(new Error("No User Exists with Id " + userId));
+          } else {
+              dao.getTask(userId, taskId, next);
+          }
+    });
+}
+
 module.exports = {
     createTask: createTask,
-    getTasks: getTasks
+    getTasks: getTasks,
+    getTask: getTask
 }

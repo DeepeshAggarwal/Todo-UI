@@ -5,5 +5,7 @@
 db.createCollection('users');
 db.createCollection('tasks');
 db.createCollection('counters');
+db.createCollection('comments');
 db.counters.insert({_id: "userid", seq: 0 });
 db.counters.insert({_id: "taskid", seq: 0 });
+db.counters.insert({_id: "commentid", seq: 0 });

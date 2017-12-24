@@ -6,7 +6,7 @@ var pw = require('credential')(),
 
 function signIn(email, password, next) {
     logger.info('entered getUser', email, password);
-    var User = mongoose.model('Users');
+    var User = mongoose.model('User');
     User.findOne({'email': email}, function (err, result) {
         if (err)
             return next(err);
@@ -28,7 +28,7 @@ function signIn(email, password, next) {
 
 function signUp(email, password, next) {
     logger.info('entered saveUser', email);
-    var User = mongoose.model('Users');
+    var User = mongoose.model('User');
     User.findOne({'email': email}, function(err, result) {
         logger.debug(result, next);
         if (err)
@@ -66,7 +66,7 @@ function signUp(email, password, next) {
 function createTask(userId, task, next) {
     logger.info('entered createTask', userId, task);
     // Confirm the userId exists
-    var Task = mongoose.model('Tasks');
+    var Task = mongoose.model('Task');
     getNextSequence('taskid', function(err, result) {
       //TODO have to update result.value.seq to result.seq
       logger.debug('seq number', result, result.value.seq);
@@ -84,9 +84,15 @@ function createTask(userId, task, next) {
 
 function getTasks(userId, next) {
     logger.info('entered getTasks', userId);
-    // Confirm the userId exists
-    var Task = mongoose.model('Tasks');
+    var Task = mongoose.model('Task');
     Task.find({'userId' : userId}).select({'__v' : 0}).exec(next);
+}
+
+function getTask(userId, taskId, next) {
+    logger.info('entered getTask', userId, taskId);
+    logger.debug('userId Type' , typeof userId );
+    var Task = mongoose.model('Task');
+    Task.findOne({'_id': taskId, 'userId' : userId}).populate('comments').populate('userId', 'id').select({'__v' : 0}).exec(next);
 }
 
 function getNextSequence(name, cb) {
@@ -97,7 +103,7 @@ function getNextSequence(name, cb) {
 
 function userExists(userId, cb) {
   logger.info('entered userExists', userId);
-  var User = mongoose.model('Users');
+  var User = mongoose.model('User');
   User.findOne({'_id': userId}).select({'_id': 1}).exec(cb);
 
 }
@@ -120,5 +126,6 @@ module.exports = {
     signUp: signUp,
     createTask: createTask,
     getTasks: getTasks,
+    getTask: getTask,
     userExists: userExists
 };

@@ -39,9 +39,9 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
       logger.info('listening on', port);
     });
 
-    open('http://localhost:3001/docs', function(err) {
-      if (err)
-        logger.error('The user closed the browser');
-      }
-    );
+    // open('http://localhost:3001/docs', function(err) {
+    //   if (err)
+    //     logger.error('The user closed the browser');
+    //   }
+    // );
 });

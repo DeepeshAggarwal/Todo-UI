@@ -1,13 +1,15 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var Tasks = new Schema({
+var Task = new Schema({
     _id         : Number
   , name        : String
   , isCompleted : Boolean
   , date_added  : { type: Date, default: Date.now }
   , due_date    : { type: Date, default: Date.now }
-  , userId      : Number
+  , userId      : { type: Number, ref: 'User' }
+  , teamId      : { type: Number, ref: 'Team' }
+  , comments    : [{ type: Number, ref: 'Comment' }]
 });
-mongoose.model("Tasks", Tasks);
+mongoose.model("Task", Task);
 
-module.exports = Tasks;
+module.exports = Task;

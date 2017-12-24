@@ -1,20 +1,22 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var Users = new Schema({
+var User = new Schema({
     _id         : Number
   , name        : String
   , email       : String
   , password    : String
+  , teamId      : [{ type: Number, ref: 'Team' }]
 });
 
-Users.methods.getPublicFields = function () {
+User.methods.getPublicFields = function () {
     var returnObject = {
         id: this._id,
         name: this.name,
         email: this.email,
+        teamId: this.teamId
     };
     return returnObject;
 };
-mongoose.model("Users", Users);
+mongoose.model("User", User);
 
-module.exports = Users;
+module.exports = User;

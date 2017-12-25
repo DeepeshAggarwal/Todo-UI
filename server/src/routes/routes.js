@@ -2,6 +2,7 @@
 
 var signController = require('./../controllers/sign.js'),
     taskController = require('./../controllers/task.js'),
+    teamController = require('./../controllers/team.js'),
     logger = require('./../lib/logger.js').get('routes');
 
 var appRouter = function (app) {
@@ -34,22 +35,24 @@ var appRouter = function (app) {
     //team
     app.post('/team', function(req, res) {
         logger.debug(req.body);
-        res.status(200).send('Under Construction')
+        teamController.createTeam(req.body, res);
     });
 
     app.post('/team/:teamId/user', function(req, res) {
         logger.debug(req.params.teamId, req.body);
-        res.status(200).send('Under Construction');
+        teamController.addUserToTeam(req.params.teamId, req.body, res);
+        // res.status(200).send('Under Construction');
     });
 
     app.delete('/team/:teamId/user/:userId', function(req, res) {
         logger.debug(req.params.teamId, req.params.userId);
-        res.status(200).send('Under Construction');
+        teamController.removeUserFromTeam(req.params.teamId, req.params.userId, res);
     });
 
     app.get('/team/:teamId/user', function(req, res) {
         logger.debug(req.params.teamId);
-        res.status(200).send('Under Construction');
+        teamController.getAllUsersOfTeam(req.params.teamId, res);
+        // res.status(200).send('Under Construction');
     })
 
     //comments

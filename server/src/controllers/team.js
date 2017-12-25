@@ -1,7 +1,7 @@
 'use strict';
 
 var util = require('./../lib/util.js'),
-    teamService = require('./../services/taskService.js'),
+    teamService = require('./../services/teamService.js'),
     logger = require('./../lib/logger.js').get('taskController');
 
 function createTeam(team, res) {

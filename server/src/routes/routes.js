@@ -27,6 +27,41 @@ var appRouter = function (app) {
     app.get("/user/:userId/tasks", function(req, res) {
         taskController.getTasks(req.params.userId, res);
     })
+    app.put('/user/:userId/task/:taskId', function(req, res) {
+        res.status(200).send('Under Construction')
+    });
+
+    //team
+    app.post('/team', function(req, res) {
+        logger.debug(req.body);
+        res.status(200).send('Under Construction')
+    });
+
+    app.post('/team/:teamId/user', function(req, res) {
+        logger.debug(req.params.teamId, req.body);
+        res.status(200).send('Under Construction');
+    });
+
+    app.delete('/team/:teamId/user/:userId', function(req, res) {
+        logger.debug(req.params.teamId, req.params.userId);
+        res.status(200).send('Under Construction');
+    });
+
+    app.get('/team/:teamId/user', function(req, res) {
+        logger.debug(req.params.teamId);
+        res.status(200).send('Under Construction');
+    })
+
+    //comments
+    app.post('/task/:taskId/comment', function(req, res) {
+        logger.debug(req.params.taskId, req.body);
+        res.status(200).send('Under Construction');
+    });
+
+    app.put('/task/:taskId/comment/:commentId', function(req, res) {
+        logger.debug(req.params.taskId, req.params.commentId, req.body);
+        res.status(200).send('Under Construction');
+    })
 
 };
 module.exports = appRouter;

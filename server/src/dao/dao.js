@@ -102,10 +102,22 @@ function getNextSequence(name, cb) {
 }
 
 function userExists(userId, cb) {
+    logger.info('entered userExists', userId);
+    var User = mongoose.model('User');
+    User.findOne({'_id': userId}).select({'_id': 1}).exec(cb);
+
+}
+
+function userExistsMoreInfo(user, cb) {
   logger.info('entered userExists', userId);
   var User = mongoose.model('User');
-  User.findOne({'_id': userId}).select({'_id': 1}).exec(cb);
-
+  User.findOne({
+    $or: [
+        {'_id': user.id},
+        {'name': user.name},
+        {'email': user.email}
+      ]
+    }).exec(cb);
 }
 
 function validateUser(storedPassword, requestPassword, cb) {
@@ -120,6 +132,55 @@ function validateUser(storedPassword, requestPassword, cb) {
     });
 }
 
+function createTeam(team, next) {
+    logger.info('entered createTeam', team);
+    var Team = mongoose.model('Team');
+    getNextSequence('teamid', function(err, result) {
+      //TODO have to update result.value.seq to result.seq
+      logger.debug('seq number', result, result.value.seq);
+      team._id = result.value.seq;
+      var team = new Team(team);
+      team.save(function (err, result) {
+          if (err) return next(err);
+          else
+              return next(undefined, result);
+      });
+    });
+}
+
+function addUserToTeam(teamId, userInfo, next) {
+    logger.info('entered addUserToTeam', team, userInfo);
+    var Team = mongoose.model('Team');
+    userInfo.teamId.push(teamId);
+    var User = mongoose.model('User')
+    var user = new User(userInfo);
+    user.save(function(err, result) {
+        if (err)
+            return next(err);
+        else {
+            Team.update({'_id':teamId}, {
+                $push : { userId: userInfo._id}
+            }, next);
+        }
+    })
+}
+
+function removeUserFromTeam(teamId, userId, next) {
+    var User = mongoose.model('User')
+    User.update({'_id':userId}, {
+        $pull : { teamId: teamId}
+    }, function() {
+        var Team = mongoose.model('Team');
+        Team.update({'_id':teamId}, {
+            $pull : { userId: userId}
+        }, next);
+    });
+}
+
+function getAllUsersOfTeam(teamId, next) {
+    var Team = mongoose.model('Team');
+    Team.find({'_id' : teamId}).populate('userId', ['_id', 'name']).select({'__v' : 0}).exec(next);
+}
 
 module.exports = {
     signIn: signIn,

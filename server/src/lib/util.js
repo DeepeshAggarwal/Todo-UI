@@ -5,9 +5,7 @@ var fs = require('fs'),
     jsf = require('json-schema-faker');
 
 function validateRequest(req, method, cb) {
-    if (req || method)
-        return cb(undefined);
-    return cb(new Error("Invalid Request"));
+      return cb(undefined);
 }
 
 

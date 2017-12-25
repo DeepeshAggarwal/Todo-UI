@@ -4,6 +4,7 @@ var Comment = new Schema({
     _id         : Number
   , comment     : String
   , commentAt   : { type: Date, default: Date.now }
+  , userId      : { type: Number, ref: 'User' }
 });
 
 Comment.methods.getPublicFields = function () {

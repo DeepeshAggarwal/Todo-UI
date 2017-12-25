@@ -6,11 +6,11 @@ var util = require('./../lib/util.js'),
 
 function createTeam(team, res) {
     logger.info("Entering createTeam ", team);
-    util.validateRequest(team, function (err) {
+    util.validateRequest(team, undefined, function (err) {
         if (err) {
             return res.status(400).send("Invalid Request");
         }
-        taskService.createTeam(team, function (err, result) {
+        teamService.createTeam(team, function (err, result) {
             if (err) {
                 logger.error(err);
                 var error = {'message': err.message};

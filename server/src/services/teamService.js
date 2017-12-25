@@ -1,6 +1,7 @@
 'use strict';
 
 var dao = require('./../dao/dao.js'),
+    signService = require('./signService.js'),
     logger = require('./../lib/logger.js');
 
 function createTeam(team, next) {

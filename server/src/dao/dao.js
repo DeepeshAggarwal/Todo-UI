@@ -78,7 +78,7 @@ function createTask(userId, task, next) {
           else
               return next(undefined, result);
       });
-    });
+    }.bind({task:task}));
 
 }
 
@@ -134,18 +134,24 @@ function validateUser(storedPassword, requestPassword, cb) {
 
 function createTeam(team, next) {
     logger.info('entered createTeam', team);
-    var Team = mongoose.model('Team');
     getNextSequence('teamid', function(err, result) {
-      //TODO have to update result.value.seq to result.seq
-      logger.debug('seq number', result, result.value.seq);
-      team._id = result.value.seq;
-      var team = new Team(team);
+      this.team._id = result.value.seq;
+      var Team = mongoose.model('Team');
+      var team = new Team(this.team);
       team.save(function (err, result) {
           if (err) return next(err);
-          else
-              return next(undefined, result);
+          else {
+              logger.debug(result);
+              var teamResult = new Team(result);
+              var User = mongoose.model('User');
+              User.update({'_id':team.userId}, {
+                  $push : { teamId: result._id}
+              }, function(err, result) {
+                  next(undefined, teamResult);
+              });
+          }
       });
-    });
+    }.bind({team:team}));
 }
 
 function addUserToTeam(teamId, userInfo, next) {
@@ -188,5 +194,6 @@ module.exports = {
     createTask: createTask,
     getTasks: getTasks,
     getTask: getTask,
-    userExists: userExists
+    userExists: userExists,
+    createTeam: createTeam
 };

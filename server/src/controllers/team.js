@@ -2,7 +2,7 @@
 
 var util = require('./../lib/util.js'),
     teamService = require('./../services/teamService.js'),
-    logger = require('./../lib/logger.js').get('taskController');
+    logger = require('./../lib/logger.js').get('TeamController');
 
 function createTeam(team, res) {
     logger.info("Entering createTeam ", team);
@@ -24,19 +24,19 @@ function createTeam(team, res) {
 }
 
 function addUserToTeam(teamId, userInfo, res) {
-    logger.info("Entering addUserToTeam for user, task", userId, taskId);
+    logger.info("Entering addUserToTeam for user, team", userInfo, teamId);
     util.validateRequest(teamId, userInfo, function (err) {
         if (err) {
             return res.status(400).send("Invalid Request");
         }
-        taskService.addUserToTeam(teamId, userInfo, function (err, result) {
+        teamService.addUserToTeam(teamId, userInfo, function (err, result) {
             if (err) {
                 logger.error(err);
                 var error = {'message': err.message};
                 res.status(500).send(error)
             }
             logger.info(result);
-            res.send(result);
+            res.status(200).send();
         });
     });
 }
@@ -47,25 +47,25 @@ function removeUserFromTeam(teamId, userId, res) {
         if (err) {
             return res.status(400).send("Invalid Request");
         }
-        taskService.removeUserFromTeam(userId, function (err, result) {
+        teamService.removeUserFromTeam(teamId, userId, function (err, result) {
             if (err) {
                 logger.error(err);
                 var error = {'message': err.message};
                 res.status(500).send(error)
             }
             logger.info(result);
-            res.send(result);
+            res.status(200).send();
         });
     });
 }
 
-function getAllUsersOfTeam(teamId, next) {
-  logger.info("Entering getAllUsersOfTeam for user", teamId, userId);
-  util.validateRequest(teamId, function (err) {
+function getAllUsersOfTeam(teamId, res) {
+  logger.info("Entering getAllUsersOfTeam for user", teamId);
+  util.validateRequest(teamId, undefined, function (err) {
       if (err) {
           return res.status(400).send("Invalid Request");
       }
-      taskService.getAllUsersOfTeam(teamId, function (err, result) {
+      teamService.getAllUsersOfTeam(teamId, function (err, result) {
           if (err) {
               logger.error(err);
               var error = {'message': err.message};

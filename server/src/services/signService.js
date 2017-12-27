@@ -15,9 +15,14 @@ function userExists(userId, next) {
     dao.userExists(userId, next);
 }
 
+function userExistsMoreInfo(userInfo, next) {
+    dao.userExistsMoreInfo(userInfo, next);
+}
+
 
 module.exports = {
     signIn: signIn,
     signUp: signUp,
-    userExists : userExists
+    userExists : userExists,
+    userExistsMoreInfo: userExistsMoreInfo
 }

@@ -90,9 +90,26 @@ function getTasks(userId, next) {
 
 function getTask(userId, taskId, next) {
     logger.info('entered getTask', userId, taskId);
-    logger.debug('userId Type' , typeof userId );
     var Task = mongoose.model('Task');
-    Task.findOne({'_id': taskId, 'userId' : userId}).populate('comments').populate('userId', 'id').select({'__v' : 0}).exec(next);
+    // Task.findOne({'_id': taskId, 'userId' : userId})
+    //   .populate('userId', '_id')
+    //   .populate('comments')
+    //   .select({'__v' : 0})
+    //   .exec(function(err, task) {
+    //     var User = mongoose.model('User');
+    //     User.populate(task, {path : 'comments.userId'}, next);
+    //   });
+    Task.findOne({'_id': taskId, 'userId' : userId})
+      .populate({
+        path: 'comments',
+        model: 'Comment',
+        populate: {
+          path:'userId',
+          model: 'User',
+          select: {'_id' : 1}
+        }})
+      .exec(next);
+
 }
 
 function getNextSequence(name, cb) {
@@ -109,7 +126,7 @@ function userExists(userId, cb) {
 }
 
 function userExistsMoreInfo(user, cb) {
-  logger.info('entered userExists', userId);
+  logger.info('entered userExists', user);
   var User = mongoose.model('User');
   User.findOne({
     $or: [
@@ -145,7 +162,7 @@ function createTeam(team, next) {
               var teamResult = new Team(result);
               var User = mongoose.model('User');
               User.update({'_id':team.userId}, {
-                  $push : { teamId: result._id}
+                  $addToSet : { teamId: result._id}
               }, function(err, result) {
                   next(undefined, teamResult);
               });
@@ -155,7 +172,7 @@ function createTeam(team, next) {
 }
 
 function addUserToTeam(teamId, userInfo, next) {
-    logger.info('entered addUserToTeam', team, userInfo);
+    logger.info('entered addUserToTeam', teamId, userInfo);
     var Team = mongoose.model('Team');
     userInfo.teamId.push(teamId);
     var User = mongoose.model('User')
@@ -165,7 +182,7 @@ function addUserToTeam(teamId, userInfo, next) {
             return next(err);
         else {
             Team.update({'_id':teamId}, {
-                $push : { userId: userInfo._id}
+                addToSet : { userId: userInfo._id}
             }, next);
         }
     })
@@ -184,8 +201,40 @@ function removeUserFromTeam(teamId, userId, next) {
 }
 
 function getAllUsersOfTeam(teamId, next) {
+    logger.info('entered getAllUsersOfTeam', teamId);
     var Team = mongoose.model('Team');
     Team.find({'_id' : teamId}).populate('userId', ['_id', 'name']).select({'__v' : 0}).exec(next);
+}
+
+
+function addComment(comment, taskId, next) {
+    var Comment = mongoose.model('Comment');
+    // var commentModel = new Comment(comment);
+    getNextSequence('commentid', function(err, result) {
+        comment._id = result.value.seq;
+        var commentModel = new Comment(comment);
+        commentModel.save(comment, function(err, commentSaveResult) {
+            if(err) next(err);
+            else {
+                var Task = mongoose.model('Task');
+                Task.update({'_id': taskId}, {
+                    $push: {comments : commentSaveResult._id}
+                }, function(err, result) {
+                    if (err) next(err);
+                    else next(undefined, commentSaveResult);
+                })
+            }
+        });
+    });
+}
+
+function updateComment(commentId, commentMessage, next) {
+  var Comment = mongoose.model('Comment');
+  Comment.update({'_id' : commentId},
+      {$set : {'comment' : commentMessage.comment}}, function(err, result) {
+          if (err) next(err)
+          else next(undefined, result)
+      });
 }
 
 module.exports = {
@@ -195,5 +244,11 @@ module.exports = {
     getTasks: getTasks,
     getTask: getTask,
     userExists: userExists,
-    createTeam: createTeam
+    createTeam: createTeam,
+    getAllUsersOfTeam: getAllUsersOfTeam,
+    userExistsMoreInfo: userExistsMoreInfo,
+    addUserToTeam: addUserToTeam,
+    removeUserFromTeam: removeUserFromTeam,
+    addComment: addComment,
+    updateComment: updateComment
 };

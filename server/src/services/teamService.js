@@ -21,7 +21,7 @@ function addUserToTeam(teamId, userInfo, next) {
           if(err) {
               next(err)
           } else if(!result || !result._id) {
-              next(new Error("No User Exists with Id " + userId));
+              next(new Error("No User Exists with email " + userInfo.email));
           } else {
               dao.addUserToTeam(teamId, result, next);
           }

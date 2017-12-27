@@ -3,6 +3,7 @@
 var signController = require('./../controllers/sign.js'),
     taskController = require('./../controllers/task.js'),
     teamController = require('./../controllers/team.js'),
+    commentController = require('./../controllers/comment.js'),
     logger = require('./../lib/logger.js').get('routes');
 
 var appRouter = function (app) {
@@ -58,12 +59,14 @@ var appRouter = function (app) {
     //comments
     app.post('/task/:taskId/comment', function(req, res) {
         logger.debug(req.params.taskId, req.body);
-        res.status(200).send('Under Construction');
+        commentController.addComment(req.body, req.params.taskId, res);
+        // res.status(200).send('Under Construction');
     });
 
     app.put('/task/:taskId/comment/:commentId', function(req, res) {
         logger.debug(req.params.taskId, req.params.commentId, req.body);
-        res.status(200).send('Under Construction');
+        commentController.updateComment(req.params.taskId, req.params.commentId, req.body, res);
+        // res.status(200).send('Under Construction');
     })
 
 };

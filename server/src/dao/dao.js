@@ -91,14 +91,6 @@ function getTasks(userId, next) {
 function getTask(userId, taskId, next) {
     logger.info('entered getTask', userId, taskId);
     var Task = mongoose.model('Task');
-    // Task.findOne({'_id': taskId, 'userId' : userId})
-    //   .populate('userId', '_id')
-    //   .populate('comments')
-    //   .select({'__v' : 0})
-    //   .exec(function(err, task) {
-    //     var User = mongoose.model('User');
-    //     User.populate(task, {path : 'comments.userId'}, next);
-    //   });
     Task.findOne({'_id': taskId, 'userId' : userId})
       .populate({
         path: 'comments',

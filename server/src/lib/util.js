@@ -8,7 +8,21 @@ function validateRequest(req, method, cb) {
       return cb(undefined);
 }
 
+function isValidSignInRequest(email) {
+    return true;
+}
+
+function isValidSignUpRequest(email, name) {
+    return true;
+}
+
+function isValidTaskRequest(task) {
+    return true;
+}
 
 module.exports = {
-    validateRequest: validateRequest
+    validateRequest: validateRequest,
+    isValidSignInRequest: isValidSignInRequest,
+    isValidSignUpRequest: isValidSignUpRequest,
+    isValidTaskRequest: isValidTaskRequest
 };

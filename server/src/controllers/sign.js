@@ -1,47 +1,45 @@
-'use strict';
+"use strict";
 
-var util = require('./../lib/util.js'),
-    signService = require('./../services/signService.js'),
-    logger = require('./../lib/logger.js').get('signController');
+var util = require("./../lib/util.js"),
+  signService = require("./../services/signService.js"),
+  logger = require("./../lib/logger.js").get("signController");
 
 function signIn(body, res) {
-    logger.info("Entering signIn");
-    util.validateRequest(body.email, body.password, function (err) {
-        if (err) {
-            return res.status(400).send("Invalid Request");
-        }
-        signService.signIn(body.email, body.password, function (err, result) {
-            if (err) {
-                logger.error(err);
-                var error = {'message': err.message};
-                res.status(400).send(error)
-            }
-            logger.info(result);
-            res.send(result);
-        });
-    });
-
+  logger.info("Entering signIn");
+  if (util.isValidSignInRequest(body.email) === true) {
+    signService
+      .signIn(body.email, body.password)
+      .then(response => {
+        logger.info(response);
+        res.send(response);
+      })
+      .catch(error => {
+        logger.error(error);
+        res.status(500).send({ message: error.message });
+      });
+  } else {
+    res.status(400).send("Wrong Request. Please Validate the request");
+  }
 }
 
 function signUp(body, res) {
-    logger.info("Entering signUp");
-    util.validateRequest(body.email, body.password, function (err) {
-        if (err) {
-            return res.status(400).send("Invalid Request");
-        }
-        signService.signUp(body.email, body.password, function (err, result) {
-            if (err) {
-                var error = {'message': err.message};
-                res.status(400).send(error)
-            }
-            logger.info(delete result.password);
-            // result = delete result.password;
-            res.status(201).send(result);
-        });
-    });
+  if (util.isValidSignUpRequest(body.email, body.name) === true) {
+    signService
+      .signUp(body.email, body.name)
+      .then(response => {
+        logger.info(response);
+        res.send(response);
+      })
+      .catch(error => {
+        logger.error(error);
+        res.status(500).send({ message: error.message });
+      });
+  } else {
+    res.status(400).send("Wrong Request. Please Validate the request");
+  }
 }
 
 module.exports = {
-    signIn: signIn,
-    signUp: signUp
+  signIn: signIn,
+  signUp: signUp
 };

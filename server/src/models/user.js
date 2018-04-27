@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 var User = new Schema({
     _id         : Number
   , name        : String
-  , email       : String
+  , email       : {type: String, unique: true }
   , password    : String
   , teamId      : [{ type: Number, ref: 'Team' }]
 });

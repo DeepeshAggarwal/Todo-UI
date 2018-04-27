@@ -6,14 +6,14 @@
   "author": "deepesh.aggarwal@macys.com",
   "dependencies": {
     "body-parser": "1.15.2",
-    "credential": "1.0.0",
+    "credential": "2.x.x",
     "express": "4.14.0",
     "js2xmlparser": "2.0.2",
     "json-schema-faker": "0.3.7",
     "jsonfile": "2.4.0",
     "log4js": "1.1.0",
     "mongodb": "2.2.12",
-    "mongoose": "^4.10.0",
+    "mongoose": "^5.0.15",
     "opn": "4.0.2",
     "swagger-express-mw": "0.7.0",
     "swagger-tools": "0.10.1"

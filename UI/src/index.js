@@ -1,16 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import App from './App';
-import Login from './components/Login';
-import './index.css';
-import { BrowserRouter as Router, Route, hashHistory } from 'react-router-dom'
+import ReactDOM from 'react-dom';
+import React from 'react';
+// import { Router, Route, hashHistory } from 'react-router';
+import { HashRouter as Router, Route } from 'react-router-dom';
+import store from './app/store/index.js';
+import './App.css';
 
 ReactDOM.render(
-  (<Router history={hashHistory}>
-      <div>
-        <Route path="/index" component={Login}/>
-        <Route path="/home" component={App}/>
-      </div>
-  </Router>),
-  document.getElementById('root')
+	<Provider store={store}>
+		<Router>
+			<Route path="/" component={App} />
+			{/* <Route path="login" component={App} /> */}
+		</Router>
+	</Provider>,
+	document.getElementById('root')
 );
+
+// import { applyMiddleware, createStore } from 'redux';
+// import { promiseMiddleware } from './middleware';

@@ -1,6 +1,6 @@
 import React from 'react';
 import Search from './Search';
-import HeaderCTA from './HeaderCTA';
+import HeaderCTA from './CTA';
 class Header extends React.Component {
 	render() {
 		return (

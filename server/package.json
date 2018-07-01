@@ -26,6 +26,7 @@
     "mocha-spec-json-reporter": "0.0.2"
   },
   "scripts": {
-    "test": "mocha tests --reporter  mocha-spec-json-reporter --reporter-options mochaFile=./logs/test-result.json"
+    "test":
+      "mocha tests --reporter  mocha-spec-json-reporter --reporter-options mochaFile=./logs/test-result.json"
   }
 }

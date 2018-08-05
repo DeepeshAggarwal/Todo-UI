@@ -1,36 +1,20 @@
 import React from 'react';
 import Tasks from './../Tasks/index';
 import Menu from './../Menu/index';
-import { Row, Col } from 'react-bootstrap/lib';
-// const mapStateToProps = state => {
-// 	return {
-// 		filter: state.filter,
-// 		tasks: state.tasks
-// 	};
-// };
+import { Row } from 'react-bootstrap/lib';
 
 class Dashboard extends React.Component {
 	render() {
 		return (
 			<Row className="show-grid justify-content-md-center dashboard">
-				<Col sm={3}>
+				<div className="d-none d-lg-block col-lg-4">
 					<Menu />
-				</Col>
-				<Col sm={6}>
+				</div>
+				<div className="col-sm-12 col-lg-8">
 					<Tasks />
-				</Col>
+				</div>
 			</Row>
 		);
 	}
 }
-
-// export default connect(mapStateToProps, () => ({}))(Dashboard);
 export default Dashboard;
-
-// {
-// 	 <ul>
-// 				{this.props.tasks.map((task, index) => {
-// 					return <li key={index}>{task.name}</li>;
-// 				})}
-// 			</ul>
-// }

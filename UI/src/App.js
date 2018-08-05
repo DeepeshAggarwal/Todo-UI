@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
+// import { Redirect } from 'react-router';
 import Header from './components/Header/index';
 import DashBoard from './components/Dashboard/index';
 const mapStateToProps = state => {

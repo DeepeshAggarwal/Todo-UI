@@ -1,3 +1,7 @@
+.row {
+  margin: 0;
+}
+
 .App {
   text-align: center;
 }
@@ -57,4 +61,75 @@
 .filter-name {
   font-size: 20px;
   font-weight: 900;
+}
+
+.dashboard {
+  margin-top: 20px;
+}
+
+.list-group-item.active {
+  background-color: #ccc;
+}
+.list-group-item {
+  border: 0px;
+  cursor: pointer;
+}
+
+.card-header {
+  padding: 0.15rem 0.4rem;
+  background-color: #fff;
+}
+
+.add-task {
+  margin-top: 10px;
+  padding-left: 10px;
+  color: #c66;
+}
+
+.add-task > span {
+  cursor: pointer;
+}
+
+[contenteditable='true']:empty:before {
+  content: attr(placeholder);
+  display: block;
+  opacity: 0.75;
+}
+
+span.label {
+  display: flex;
+  align-items: center;
+  display: inline-block;
+  background-color: #edd;
+  border: 1px solid #edd;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  padding-left: 5px;
+  margin-right: 5px;
+}
+
+.label > .emptyCircle {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  background-color: #fff;
+  border-radius: 15px;
+}
+
+.label > .text {
+  margin: 0 5px;
+  flex-grow: 2;
+}
+
+.label > .remove {
+  display: inline-block;
+  background-color: #ccc;
+  border: 1px solid #ccc;
+  color: white;
+  cursor: pointer;
+}
+
+.invalid-feedback {
+  color: red;
+  font-size: 12px;
 }

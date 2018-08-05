@@ -1,5 +1,6 @@
 import { Provider } from 'react-redux';
 import App from './App';
+import Test from './Test';
 import ReactDOM from 'react-dom';
 import React from 'react';
 // import { Router, Route, hashHistory } from 'react-router';
@@ -10,8 +11,13 @@ import './App.css';
 ReactDOM.render(
 	<Provider store={store}>
 		<Router>
-			<Route path="/" component={App} />
-			{/* <Route path="login" component={App} /> */}
+			<div>
+				<Route exact path="/" component={App} />
+				{/* <Route path="/" component={Drawer} /> */}
+				{/* <Route path="login" component={App} /> */}
+				<Route path="/test" component={Test} />
+				<Route path="app" component={App} />
+			</div>
 		</Router>
 	</Provider>,
 	document.getElementById('root')

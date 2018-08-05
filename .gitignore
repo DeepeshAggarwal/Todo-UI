@@ -6,6 +6,7 @@ server/node_modules
 server/src/tmp
 server/tests
 server/src/tmp/somefile.log
+UI/src/tempComponents
 # testing
 UI/coverage
 

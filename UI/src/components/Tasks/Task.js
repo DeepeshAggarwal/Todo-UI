@@ -1,21 +1,30 @@
 import React from 'react';
-import { Row, Col } from 'react-bootstrap/lib';
+import { connect } from 'react-redux';
+import { Row } from 'react-bootstrap/lib';
 import TaskImage from './TaskImage';
+import actions from './../../app/actions/index';
+
+const taskCompletedAction = actions.taskCompleted;
+const mapDispatherToProps = dispath => ({
+	taskCompleted: id => dispath(taskCompletedAction(id))
+});
 
 class Task extends React.Component {
 	render() {
 		return (
 			<Row className="task">
-				<Col>
-					<TaskImage />
-				</Col>
-				<Col sm={11}>
+				<div className="col-2 col-md-1">
+					<TaskImage
+						completed={this.props.task.isCompleted}
+						taskCompleted={() => this.props.taskCompleted(this.props.task.id)}
+					/>
+				</div>
+				<div className="col-10 col-md-11">
 					<span className="font-16 taskName">{this.props.task.name}</span>
-					{/*<CalculateDay taskDue={this.props.task.due_date} />*/}
-				</Col>
+				</div>
 			</Row>
 		);
 	}
 }
 
-export default Task;
+export default connect(() => ({}), mapDispatherToProps)(Task);

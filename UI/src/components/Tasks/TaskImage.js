@@ -1,18 +1,18 @@
 import React from 'react';
 
 class TaskImage extends React.Component {
-	constructor() {
+	constructor(props) {
 		super();
 		this.onClick = this.onClick.bind(this);
 		this.onMouseEnter = this.onMouseEnter.bind(this);
 		this.onMouseLeave = this.onMouseLeave.bind(this);
 		this.state = {
-			opacity: 0
+			opacity: props.completed ? 1 : 0
 		};
 	}
 
 	onClick = function() {
-		console.log('clicked');
+		this.props.taskCompleted();
 	};
 
 	onMouseEnter = function() {
@@ -30,9 +30,13 @@ class TaskImage extends React.Component {
 	render() {
 		return (
 			<div
-				onClick={this.onClick}
-				onMouseEnter={this.onMouseEnter}
-				onMouseLeave={this.onMouseLeave}
+				onClick={() => (!this.props.completed ? this.onClick() : false)}
+				onMouseEnter={() =>
+					!this.props.completed ? this.onMouseEnter() : false
+				}
+				onMouseLeave={() =>
+					!this.props.completed ? this.onMouseLeave() : false
+				}
 				className="task-image"
 			>
 				<div className="tick" style={{ opacity: this.state.opacity }} />

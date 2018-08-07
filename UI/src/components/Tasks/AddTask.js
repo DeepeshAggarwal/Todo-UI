@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import ContentEditable from './../Common/ContentEditable';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+// import ContentEditable from './../Common/ContentEditable';
 import actions from './../../app/actions/index';
 import Modal from './../Common/Modal';
-const SPACE_KEYCODE = 32;
+
+// const SPACE_KEYCODE = 32;
 const addTaskAction = actions.addTask;
 const mapDispatherToProps = dispatch => ({
   addTaskProps: task => dispatch(addTaskAction(task))
@@ -16,11 +19,19 @@ class AddTask extends Component {
       name: '',
       isCompleted: false,
       inValid: [],
-      show: false
+      show: false,
+      due_date: new Date(new Date().toDateString())
     };
     this.taskDescription = this.taskDescription.bind(this);
     this.add = this.add.bind(this);
     this.showModal = this.showModal.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
+  }
+
+  handleDateChange(momentDate) {
+    this.setState({
+      due_date: new Date(momentDate.toDate().toDateString())
+    });
   }
 
   taskDescription(event) {
@@ -77,11 +88,9 @@ class AddTask extends Component {
                 ) : null}
               </div>
               <div className="form-group col-12">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="taskdate"
-                  placeholder="Completion Date"
+                <DatePicker
+                  selected={moment(this.state.due_date)}
+                  onChange={this.handleDateChange}
                 />
               </div>
               {/*<div className="form-group col-12">

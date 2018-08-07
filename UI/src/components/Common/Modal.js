@@ -33,10 +33,6 @@ class Modal extends Component {
   static Header = ModalHeader;
   static Footer = ModalFooter;
   static Body = ModalBody;
-  constructor(props) {
-    super();
-    console.log(props);
-  }
   render() {
     return (
       <div>
@@ -49,7 +45,7 @@ class Modal extends Component {
                 id="addTaskModal"
                 tabIndex="-1"
                 role="dialog"
-                aria-labelledby="exampleModalCenterTitle"
+                aria-labelledby="taskModal"
                 aria-hidden="true"
                 style={style}
               >

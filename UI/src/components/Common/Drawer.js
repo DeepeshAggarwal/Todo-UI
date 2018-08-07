@@ -11,13 +11,7 @@ const mapStateToProps = state => {
 };
 
 class Drawer extends React.Component {
-	constructor(props) {
-		super(props);
-		console.log(this.props);
-	}
-
 	render() {
-		console.log('rendering drawer');
 		return (
 			<div>
 				<div className="drawer-container" onClick={this.props.showDrawer} />
@@ -40,8 +34,8 @@ class Drawer extends React.Component {
 					</div>
 
 					<div className="drawer-body">
-						{<HeaderCTA isLoggedIn={this.props.isLoggedIn} />}
-						<Menu />
+						<HeaderCTA isLoggedIn={this.props.isLoggedIn} position="relative" />
+						<Menu closeDrawer={this.props.showDrawer} />
 					</div>
 				</div>
 			</div>

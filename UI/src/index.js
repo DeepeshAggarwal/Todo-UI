@@ -7,6 +7,7 @@ import React from 'react';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import store from './app/store/index.js';
 import './App.css';
+import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 ReactDOM.render(
 	<Provider store={store}>

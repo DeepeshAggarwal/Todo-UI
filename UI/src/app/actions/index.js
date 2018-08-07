@@ -1,4 +1,8 @@
-import { ADD_TASK, TASK_COMPLETED } from '../../common/constants';
+import {
+	ADD_TASK,
+	TASK_COMPLETED,
+	UPDATE_FILTER
+} from '../../common/constants';
 
 const addTask = task => ({
 	type: ADD_TASK,
@@ -10,7 +14,13 @@ const taskCompleted = taskId => ({
 	payload: taskId
 });
 
+const updateFilter = filter => ({
+	type: UPDATE_FILTER,
+	payload: filter
+});
+
 export default {
 	addTask,
-	taskCompleted
+	taskCompleted,
+	updateFilter
 };

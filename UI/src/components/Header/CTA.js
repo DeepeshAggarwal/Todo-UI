@@ -1,37 +1,44 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
+import DropdownMenu from './../Common/DropdownMenu';
 class HeaderCTA extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			items: ['Edit Profile', 'Exit Team', 'Sign Out'],
+			show: false
+		};
+		this.showHideMenu = this.showHideMenu.bind(this);
+	}
+
+	showHideMenu() {
+		this.setState({
+			show: !this.state.show
+		});
+	}
+
 	render() {
 		return (
 			<div>
 				{this.props.isLoggedIn ? (
-					<ul className="navbar-nav ml-auto">
-						<a
-							className="nav-link dropdown-toggle"
-							href="#"
-							id="navbarDropdownMenuLink"
-							data-toggle="dropdown"
-							aria-haspopup="true"
-							aria-expanded="false"
+					<div
+						style={{
+							position: 'relative'
+						}}
+					>
+						<div
+							className="username dropdown-toggle"
+							onClick={this.showHideMenu}
 						>
 							UserName
-						</a>
-						<div
-							className="dropdown-menu"
-							aria-labelledby="navbarDropdownMenuLink"
-						>
-							<Link to="/edit" className="dropdown-item">
-								Edit Profile
-							</Link>
-							<Link to="/exit" className="dropdown-item">
-								Exit Team
-							</Link>
-							<Link to="/" className="dropdown-item">
-								Something else here
-							</Link>
 						</div>
-					</ul>
+						{this.state.show ? (
+							<DropdownMenu
+								position={this.props.position}
+								list={this.state.items}
+							/>
+						) : null}
+					</div>
 				) : (
 					<ul className="navbar-nav ml-auto">
 						<li className="nav-item">

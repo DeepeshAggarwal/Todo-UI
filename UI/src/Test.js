@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
 import Modal from './components/Common/Modal';
-
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 class Test extends Component {
   constructor(props) {
     super();
     this.state = {
-      show: false
+      show: false,
+      date: new Date(new Date().toDateString())
     };
     this.showModal = this.showModal.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(momentDate) {
+    this.setState({
+      date: new Date(momentDate.toDate().toDateString())
+    });
   }
 
   showModal = () => {
@@ -42,6 +51,10 @@ class Test extends Component {
             </button>
           </Modal.Footer>
         </Modal>
+        <DatePicker
+          selected={moment(this.state.date)}
+          onChange={this.handleChange}
+        />
       </div>
     );
   }

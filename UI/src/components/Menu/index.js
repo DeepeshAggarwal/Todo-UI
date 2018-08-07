@@ -1,33 +1,58 @@
 import React from 'react';
-import { connect } from 'react-redux';
-const mapStateToProps = state => ({
-	inbox: state.tasks.length,
-	today: 1,
-	next7Days: 3
-});
+import Filter from './Filter';
+
+// const mapStateToProps = state => ({
+// 	currentFilter: state.currentFilter
+// });
 class Menu extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			filters: [
+				{
+					name: 'Inbox',
+					start_date: new Date(new Date(null).toDateString()),
+					end_date: new Date(new Date(new Date().setYear(2050)).toDateString()),
+					isCompleted: false
+				},
+				{
+					name: 'Today',
+					start_date: new Date(new Date().toDateString()),
+					end_date: new Date(new Date().toDateString()),
+					isCompleted: false
+				},
+				{
+					name: 'Archieve',
+					start_date: new Date(new Date(null).toDateString()),
+					end_date: new Date(new Date(new Date().setYear(2050)).toDateString()),
+					isCompleted: true
+				},
+				{
+					name: 'Next 7 Days',
+					start_date: new Date(new Date().toDateString()),
+					end_date: new Date(
+						new Date(
+							new Date().setDate(new Date().getDate() + 7)
+						).toDateString()
+					),
+					isCompleted: false
+				}
+			]
+		};
+	}
 	render() {
 		return (
 			<div>
 				<ul className="list-group">
-					<li className="list-group-item d-flex justify-content-between align-items-center active">
-						Inbox
-						<span className="badge badge-primary badge-pill">
-							{this.props.inbox}
-						</span>
-					</li>
-					<li className="list-group-item d-flex justify-content-between align-items-center">
-						Today
-						<span className="badge badge-primary badge-pill">
-							{this.props.today}
-						</span>
-					</li>
-					<li className="list-group-item d-flex justify-content-between align-items-center">
-						Next 7 Days
-						<span className="badge badge-primary badge-pill">
-							{this.props.next7Days}
-						</span>
-					</li>
+					{this.state.filters.map((filter, index) => {
+						return (
+							<Filter
+								closeDrawer={this.props.closeDrawer}
+								key={index}
+								filter={filter}
+							/>
+						);
+					})}
 				</ul>
 				<div id="accordion">
 					<div
@@ -78,5 +103,5 @@ class Menu extends React.Component {
 		);
 	}
 }
-
-export default connect(mapStateToProps, () => ({}))(Menu);
+export default Menu;
+// export default connect(mapStateToProps, () => ({}))(Menu);

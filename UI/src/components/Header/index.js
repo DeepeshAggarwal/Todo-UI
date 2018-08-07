@@ -31,7 +31,7 @@ class Header extends React.Component {
 					</button>
 
 					<div className="collapse navbar-collapse" id="navbarSupportedContent">
-						<HeaderCTA isLoggedIn={this.props.isLoggedIn} />
+						<HeaderCTA isLoggedIn={this.props.isLoggedIn} position="absolute" />
 					</div>
 				</nav>
 			</div>

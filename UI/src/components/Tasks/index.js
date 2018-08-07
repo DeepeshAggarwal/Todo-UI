@@ -15,9 +15,14 @@ class Tasks extends React.Component {
 	render() {
 		return (
 			<div>
-				<Row className="filter-name">{this.props.filter}</Row>
+				<Row className="filter-name">{this.props.filter.name}</Row>
 				{this.props.tasks
-					.filter(task => !task.isCompleted)
+					.filter(
+						task =>
+							new Date(task.due_date) >= this.props.filter.start_date &&
+							new Date(task.due_date) <= this.props.filter.end_date &&
+							task.isCompleted === this.props.filter.isCompleted
+					)
 					.map((task, index) => {
 						return <Task key={index} task={task} />;
 					})}

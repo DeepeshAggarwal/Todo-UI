@@ -133,3 +133,40 @@ span.label {
   color: red;
   font-size: 12px;
 }
+
+.username {
+  height: 50px;
+  align-items: center;
+  display: flex;
+  padding-left: 20px;
+  color: #007bff;
+}
+
+.downdownMenu.absolute {
+  position: absolute;
+  margin-bottom: 20px;
+  min-width: 171px;
+  background: white;
+  margin: -7px -42px;
+  z-index: 208;
+  box-shadow: 1px 1px 5px 1px black;
+  box-sizing: border-box;
+}
+.downdownMenu.relative {
+  position: relative;
+  margin-bottom: 20px;
+}
+.absolute > .cta-item:not(:last-child) {
+  border-bottom: 1px solid black;
+}
+.absolute > .cta-item {
+  text-align: center;
+}
+
+.relative > .cta-item {
+  padding-left: 35px;
+}
+.downdownMenu > .cta-item {
+  cursor: pointer;
+  margin-bottom: 2px;
+}

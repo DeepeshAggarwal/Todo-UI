@@ -1,7 +1,3 @@
-import { constants } from '../../common/constants';
-
-const actions = constants.actions.init;
-
 const defaultState = {
   'currentFilter': {
     name: 'Inbox',

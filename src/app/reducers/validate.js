@@ -5,27 +5,34 @@ const actions = constants.actions.validate;
 export default function(state = {}, action) {
 	let newState = {}
 	switch(action.type) {
-		case action.VALIDATE_LOADING:
+		case actions.VALIDATE_LOADING:
 			newState = {
 				...state, 
 				loading: true,
 				complete: false,
 				error: false
 			}
-		case action.VALIDATE_COMPLETE:
+			break;
+		case actions.VALIDATE_COMPLETE:
 			newState = {
 				...state, 
 				loading: false,
 				complete: true,
 				error: false
 			}
-		case action.VALIDATE_ERROR:
+			break;
+		case actions.VALIDATE_ERROR:
 			newState = {
 				...state, 
 				loading: false,
 				complete: false, 
-				error:true
+				error:true,
+				errorMessage: action.payload
 			}
+			break;
+		default:
+			newState = state;
+			break;
 	}
 	return newState;
 }

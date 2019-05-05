@@ -1,10 +1,9 @@
 import { Provider } from 'react-redux';
 import App from './App';
-import Test from './Test';
 import ReactDOM from 'react-dom';
 import React from 'react';
 // import { Router, Route, hashHistory } from 'react-router';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import store from './app/store/index.js';
 import './App.css';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';

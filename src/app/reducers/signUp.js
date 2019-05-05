@@ -1,5 +1,4 @@
 import { constants } from '../../common/constants';
-import request from './../../lib/httpHelper';
 
 const actions = constants.actions.signUp;
 
@@ -28,6 +27,10 @@ export default function(state = {}, action) {
 				...state, 
 				loading: true
 			}
+			break;
+		default:
+			newState = state;
+			break;
 	}
 	return newState;
 }

@@ -44,9 +44,14 @@ const validateError = error => ({
 	payload: error
 })
 
-const validationLoading = () => {
+const validationLoading = () => ({
 	type: constants.actions.validate.VALIDATE_LOADING
-}
+})
+
+//TODO have to change to send right sign in validation event
+const signInValidationNotification = () => ({
+	type: constants.actions.validate.VALIDATE_LOADING
+})
 
 const signUp = userInfo => dispatch => {
 	dispatch(signUpLoading());
@@ -64,10 +69,11 @@ const validate = token => dispatch => {
 	let url = 'http://localhost:3001/validate?token=' + token;
 	httpHelper.get(url)
 	.then(response => {
+		dispatch(signInValidationNotification())
 		dispatch(validateCompletion(response))
 	}).catch(error => {
 		debugger;
-		dispatch(validateError(error))
+		dispatch(validateError(error.response.body.message))
 	})	
 }
 

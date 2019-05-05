@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom'
+import React from 'react';
+// import { Redirect } from 'react-router-dom'
 
-const publicPaths = ['/', '/signin', '/signup', '/test']
+const publicPaths = ['/', '/signin', '/signup', '/test', '/validate']
 
-const checkAuth = () => {
+const checkAuth = (props) => {
 	const xAuthToken = localStorage.getItem('x-auth-token') // TODO move to constants
 	if(!xAuthToken) {
 		const currentPath = window.location.pathname;
 		if(!publicPaths.includes(currentPath)) {
-			window.location = "/";				
+			props.history.push('/');
 		}
 	} else {
 		// TOOD change this to validation api to check if token is expired or not
@@ -17,10 +17,10 @@ const checkAuth = () => {
 	}
 }
 
-class BaseComponent extends Component {
-	constructor() {
-		super();
-		checkAuth();
+class BaseComponent extends React.Component {
+	constructor(props) {
+		super(props);
+		checkAuth(props);
 	}
 }
 

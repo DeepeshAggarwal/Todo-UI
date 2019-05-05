@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import {FormGroup, ControlLabel, FormControl, Alert} from 'react-bootstrap';
-import { Container, Row, Col } from 'react-bootstrap/lib';
+import { Col } from 'react-bootstrap/lib';
 import actions from './../../app/actions/index';
 
 const mapDispatchToProps = dispatch => ({
@@ -57,41 +57,41 @@ class SignUp extends Component {
   render() {
     return ( 
       <Col className="create_account_form">
-          {
-            this.props.isSignUpError ?
-            <Col>
-              <Alert variant='danger'>
-                <p>
-                  { this.props.signUpErrorMessage }
-                </p>
-              </Alert>
-            </Col>
-            : null
-          }
-          {
-            this.props.isSignUpComplete ?
-            <Col>
-              <Alert variant='primary'>
-                <p>
-                  An email has been send to confirm your email address.
-                </p>
-              </Alert>
-            </Col>
-            : null
-          }
+        {
+          this.props.isSignUpError ?
           <Col>
-            <form>
-              <FieldGroup id="formControlsText" type="text" label="Username" placeholder="Enter username" onChange={this.handleUserInput} />
-              <FieldGroup id="formControlsEmail" type="email" label="Email address" placeholder="Enter email" onChange={this.handleEmailInput}/>
-              <FieldGroup id="formControlsPassword" label="Password" type="password" placeholder="Enter password" onChange={this.handlePasswordInput}/>
-              <button type="button" onClick={this.save} className="btn btn-primary">
-                Sign Up
-              </button>
-              {
-                this.props.isLoading === true ? 'This is loading' : null
-              }
-            </form>
+            <Alert bsStyle='danger'>
+              <p>
+                { this.props.signUpErrorMessage }
+              </p>
+            </Alert>
           </Col>
+          : null
+        }
+        {
+          this.props.isSignUpComplete ?
+          <Col>
+            <Alert>
+              <p>
+                An email has been send to confirm your email address.
+              </p>
+            </Alert>
+          </Col>
+          : null
+        }
+        <Col>
+          <form>
+            <FieldGroup id="formControlsText" type="text" label="Username" placeholder="Enter username" onChange={this.handleUserInput} />
+            <FieldGroup id="formControlsEmail" type="email" label="Email address" placeholder="Enter email" onChange={this.handleEmailInput}/>
+            <FieldGroup id="formControlsPassword" label="Password" type="password" placeholder="Enter password" onChange={this.handlePasswordInput}/>
+            <button type="button" onClick={this.save} className="btn btn-primary">
+              Sign Up
+            </button>
+            {
+              this.props.isLoading === true ? 'This is loading' : null
+            }
+          </form>
+        </Col>
       </Col>
     )
   }

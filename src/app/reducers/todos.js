@@ -1,5 +1,4 @@
 import { constants } from '../../common/constants';
-import request from './../../lib/httpHelper';
 
 const actions = constants.actions.task;
 let nextTaskId = 4;
@@ -32,6 +31,7 @@ export default function(state = {}, action) {
 			break;
 		default:
 			newState = state;
+			break;
 	}
 	return newState;
 };

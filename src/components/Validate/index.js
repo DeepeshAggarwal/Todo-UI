@@ -1,8 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import queryString from 'query-string';
-import { connect} from 'react-redux';
 import actions from './../../app/actions/index';
-console.log(actions);
+
+import * as Lib from 'react-bootstrap';
+console.log(Lib);
+
 const mapDispatchToProps = dispatch => ({
 	doValidate: (token) => {
 		dispatch(actions.validate(token))
@@ -12,7 +15,8 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => {
 	return {
 		isValidationComplete: state.validate.complete,
-		isValidationError: state.validate.error
+		isValidationError: state.validate.error,
+		validationError: state.validate.errorMessage
 	}
 }
 
@@ -20,20 +24,28 @@ class Validate extends React.Component {
 
 	componentWillReceiveProps(nextProps) {
 		if(nextProps.isValidationComplete) {
-			console.log(this.props, nextProps);
-			console.log("validated");
+			this.props.history.push('/signin');
 		}
 	}
 
 	componentDidMount() {
-		const value=queryString.parse(this.props.location.search);
-		const token=value.token;
+		const value = queryString.parse(this.props.location.search);
+		const token = value.token;
 		this.props.doValidate(token);
 	}
 
 	render() {
-		return null;
+		return (
+			<div>
+			{
+				this.props.loading ? 'Loading' : null
+			}
+			{
+				this.props.isValidationError ? this.props.validationError : null
+			}
+			</div>
+		);
 	}
 }
 
-export default connect(() => ({}), mapDispatchToProps)(Validate);
+export default connect(mapStateToProps, mapDispatchToProps)(Validate);

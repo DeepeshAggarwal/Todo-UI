@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
-import { Container, Row, Col } from 'react-bootstrap/lib';
+import { Row } from 'react-bootstrap/lib';
 
 function FieldGroup({ id, label, help, ...props }) {
   return (
@@ -59,7 +59,7 @@ class SignUp extends Component {
           <form onSubmit={this.saveAndContinue}>
             <FieldGroup id="formControlsEmail" type="email" label="Email" placeholder="Enter Email" onChange={this.handleEmailInput}/>
             <FieldGroup id="formControlsPassword" label="Password" type="password" placeholder="Enter password" onChange={this.handlePasswordInput}/>
-            <button type="button" className="btn btn-primary" type="submit">
+            <button type="button" className="btn btn-primary">
               Sign In
             </button>
           </form>

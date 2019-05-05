@@ -5,6 +5,7 @@
   "dependencies": {
     "jquery": "^3.3.1",
     "moment": "^2.22.2",
+    "query-string": "^6.5.0",
     "react": "^15.6.2",
     "react-bootstrap": "^0.30.10",
     "react-content-loader": "^1.7.3",
@@ -13,9 +14,13 @@
     "react-redux": "^4.4.5",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "redux": "^3.6.0"
+    "react-router-redux": "^4.0.8",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.3.0",
+    "superagent": "^5.0.3"
   },
   "devDependencies": {
+    "eslint-plugin-react": "^7.12.4",
     "react-scripts": "0.9.5"
   },
   "scripts": {

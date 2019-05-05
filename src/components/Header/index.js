@@ -2,6 +2,7 @@ import React from 'react';
 import Search from './Search';
 import HeaderCTA from './CTA';
 import Drawer from './../Common/Drawer';
+import { Link } from 'react-router-dom';
 class Header extends React.Component {
 	constructor() {
 		super();
@@ -22,9 +23,9 @@ class Header extends React.Component {
 			<div>
 				{this.state.isDrawer ? <Drawer showDrawer={this.showDrawer} /> : null}
 				<nav className="row navbar navbar-expand-lg navbar-light bg-light">
-					<a className="navbar-brand" href="#">
+					<Link className="navbar-brand" to="/">
 						ToDo
-					</a>
+					</Link>
 					{this.props.isLoggedIn ? <Search /> : null}
 					<button className="d-lg-none" onClick={this.showDrawer}>
 						<span className="navbar-toggler-icon" />

@@ -2,3 +2,35 @@ export const ADD_TASK = 'ADD_TASK';
 export const INIT = '@@INIT';
 export const TASK_COMPLETED = 'TASK_COMPLETED';
 export const UPDATE_FILTER = 'UPDATE_FILTER';
+export const SIGN_IN_ACTION = 'SIGN_IN_ACTION';
+export const SIGN_IN_COMPLETE = 'SIGN_IN_COMPLETE';
+export const SIGN_IN_ERROR = 'SIGN_IN_ERROR';
+export const SIGN_IN_LOADING = 'SIGN_IN_LOADING';
+
+export const constants = {
+	actions : {
+		init: {
+			INIT: '@@redux/INIT'
+		},
+		task: {
+			ADD_TASK: 'ADD_TASK',
+			TASK_COMPLETED: 'TASK_COMPLETED',
+			UPDATE_FILTER: 'UPDATE_FILTER'
+		},
+		signIn: {
+			SIGN_IN_COMPLETE: 'SIGN_IN_COMPLETE',
+			SIGN_IN_LOADING: 'SIGN_IN_LOADING',
+			SIGN_IN_ERROR: 'SIGN_IN_ERROR'
+		},
+		signUp: {
+			SIGN_UP_COMPLETE: 'SIGN_UP_COMPLETE',
+			SIGN_UP_LOADING: 'SIGN_UP_LOADING',
+			SIGN_UP_ERROR: 'SIGN_UP_ERROR',
+		},
+		validate: {
+			VALIDATE_COMPLETE: 'VALIDATE_COMPLETE',
+			VALIDATE_ERROR: 'VALIDATE_ERROR',
+			VALIDATE_LOADING: 'VALIDATE_LOADING'
+		}
+	}
+}

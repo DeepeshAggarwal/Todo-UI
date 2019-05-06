@@ -6,8 +6,8 @@ import { Row } from 'react-bootstrap/lib';
 
 const mapStateToProps = state => {
 	return {
-		tasks: state.tasks,
-		filter: state.currentFilter
+		tasks: state.todos.tasks || [],
+		filter: state.todos.currentFilter
 	};
 };
 

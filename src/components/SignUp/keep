@@ -1,0 +1,4 @@
+
+kubectl -n platform exec -it platform-978b4df7-g7s9v -- curl localhost:11210/jolokia/exec/ch.qos.logback.classic:Name=default,Type=ch.qos.logback.classic.jmx.JMXConfigurator/setLoggerLevel/com.sourceclear.services.amazonqueue/DEBUG
+
+

@@ -1,35 +1,33 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-// import { Redirect } from 'react-router';
+import { withRouter, Switch } from 'react-router-dom';
 import Header from './components/Header/index';
-import DashBoard from './components/Dashboard/index';
+import routes from './app/routes/index';
+import BaseComponent from './components/BaseComponent';
+import actions from './app/actions/index';
+
+const mapDispatchToProps = dispatch => ({
+  validateToken: (token) => {
+    dispatch(actions.initValidateToken(token))
+  }
+})
+
 const mapStateToProps = state => {
   return {
-    isLoggedIn: state.isLoggedIn
+    isLoggedIn: state.user && state.user.isLoggedIn
   };
 };
 
-class App extends Component {
-  componentDidMount() {
-    // console.log(this.state);
-  }
+class App extends BaseComponent {
 
   render() {
     return (
       <div className="container-fluid">
         <Header isLoggedIn={this.props.isLoggedIn} />
-        <DashBoard />
-        {/* 
-        <Home />
-        TODO 
-        based on logged in 
-        true : render dashboard or redirect to dashboard
-        false : render home or dont do anything
-        <Footer />
-        */}
+        <Switch children={routes()} />
       </div>
     );
   }
 }
 
-export default connect(mapStateToProps, () => ({}))(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

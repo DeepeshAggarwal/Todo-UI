@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Modal from './components/Common/Modal';
+import SignUp from './components/SignUp/index'
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 class Test extends Component {
@@ -55,6 +56,7 @@ class Test extends Component {
           selected={moment(this.state.date)}
           onChange={this.handleChange}
         />
+        <SignUp />
       </div>
     );
   }

@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import actions from './../../app/actions/index';
 
 const mapStateToProps = state => ({
-	currentFilter: state.currentFilter,
-	tasks: state.tasks
+	currentFilter: state.todos.currentFilter,
+	tasks: state.todos.tasks || []
 });
 
 const mapDispatherToProps = dispath => ({

@@ -1,12 +1,16 @@
 import { combineReducers } from 'redux'
 import init from './init';
 import signUp from './signUp';
-import todos from './todos';
+import signIn from './signIn';
 import validate from './validate';
+import todos from './todos';
+import user from './user';
 
 export default combineReducers({
 	init,
-	todos, 
 	signUp,
-	validate
+	signIn,
+	validate,
+	todos,
+	user
 })

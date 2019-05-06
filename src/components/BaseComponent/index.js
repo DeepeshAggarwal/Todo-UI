@@ -4,6 +4,7 @@ import React from 'react';
 const publicPaths = ['/', '/signin', '/signup', '/test', '/validate']
 
 const checkAuth = (props) => {
+	console.log(props);
 	const xAuthToken = localStorage.getItem('x-auth-token') // TODO move to constants
 	if(!xAuthToken) {
 		const currentPath = window.location.pathname;
@@ -12,8 +13,7 @@ const checkAuth = (props) => {
 		}
 	} else {
 		// TOOD change this to validation api to check if token is expired or not
-		// if expired redirect to login page(which as of now is home page with log in modal) 
-		return true;
+		props.validateToken(xAuthToken);
 	}
 }
 

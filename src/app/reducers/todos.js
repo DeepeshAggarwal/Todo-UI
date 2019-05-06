@@ -1,6 +1,15 @@
 import { constants } from '../../common/constants';
 
 const actions = constants.actions.task;
+const defaultState = {
+  'currentFilter': {
+    name: 'Inbox',
+    start_date: new Date(new Date(null).toDateString()),
+    end_date: new Date(new Date(new Date().setYear(2050)).toDateString()),
+    isCompleted: false
+  }
+};
+
 let nextTaskId = 4;
 
 export default function(state = {}, action) {
@@ -10,7 +19,7 @@ export default function(state = {}, action) {
 			action.payload.id = nextTaskId++;
 			newState = {
 				...state,
-				tasks: state.tasks.concat(action.payload)
+				tasks: (state.tasks || []).concat(action.payload)
 			};
 			break;
 		case actions.TASK_COMPLETED:
@@ -30,7 +39,10 @@ export default function(state = {}, action) {
 			};
 			break;
 		default:
-			newState = state;
+			newState = {
+				...state,
+				currentFilter: defaultState.currentFilter
+			};
 			break;
 	}
 	return newState;

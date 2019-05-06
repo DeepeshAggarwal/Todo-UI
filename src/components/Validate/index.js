@@ -3,9 +3,6 @@ import { connect } from 'react-redux';
 import queryString from 'query-string';
 import actions from './../../app/actions/index';
 
-import * as Lib from 'react-bootstrap';
-console.log(Lib);
-
 const mapDispatchToProps = dispatch => ({
 	doValidate: (token) => {
 		dispatch(actions.validate(token))

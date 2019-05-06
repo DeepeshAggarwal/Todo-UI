@@ -1,6 +1,27 @@
-import React, {Component} from 'react';
-import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
-import { Row } from 'react-bootstrap/lib';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import FormControl from 'react-bootstrap/lib/FormControl';
+import FormGroup from 'react-bootstrap/lib/FormGroup';
+import ControlLabel from 'react-bootstrap/lib/ControlLabel';
+import Col from 'react-bootstrap/lib/Col';
+import Alert from 'react-bootstrap/lib/Alert';
+import actions from './../../app/actions/index';
+
+const mapDispatchToProps = dispatch => ({
+    onSubmit: (userInfo) => {
+      dispatch(actions.signIn(userInfo))
+    }
+})
+
+const mapStateToProps = state => {
+  return {
+    isLoading: state.signIn.loading,
+    isSignInComplete: state.signIn.complete,
+    responseBody: state.signIn.body,
+    isSignInError: state.signIn.error,
+    signInErrorMessage: state.signIn.errorMessage
+  }
+}
 
 function FieldGroup({ id, label, help, ...props }) {
   return (
@@ -11,61 +32,74 @@ function FieldGroup({ id, label, help, ...props }) {
   );
 }
 
-class SignUp extends Component {
+class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: null,
       email: null,
       password: null,
-      confirmPassword: null,
-      error: null
     }
   }
 
-  handleUserInput = (event) => {
-    this.setState({user: event.target.value});
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.isSignInComplete && nextProps.responseBody.validated) {
+      localStorage.setItem('x-auth-token', nextProps.responseBody.token);
+      this.props.history.push('/user/' + nextProps.responseBody.id);
+    }
   }
 
   handlePasswordInput = (event) => {
-    this.setState({password: event.target.value});
+    this.setState({ password: event.target.value });
   }
 
   handleEmailInput = (event) => {
-    this.setState({email: event.target.value, error: null});
+    this.setState({ email: event.target.value });
   }
 
-  // handleError = function(jqXHR, status, errorThrown) {
-  //     this.setState({error: jqXHR.responseJSON.message});
-  // }
-
-  // signUpSuccess = function(response) {
-  //     this.props.onSuccess(response);
-  // }
-
-  saveAndContinue = function(event) {
-      let request = {
-          'username': this.state.user,
-          'email': this.state.email,
-          'password': this.state.password
-      }
-      console.log(request);
-      // TODO dispath the action to call and add loader in submit button
+  save = (event) => {
+    this.props.onSubmit(this.state);
   }
 
   render() {
     return ( 
-      <Row className="create_account_form">
-          <form onSubmit={this.saveAndContinue}>
-            <FieldGroup id="formControlsEmail" type="email" label="Email" placeholder="Enter Email" onChange={this.handleEmailInput}/>
+      <Col>
+        {
+          this.props.isSignInComplete && !this.props.responseBody.validated ?
+          <Col>
+            <Alert bsStyle='warning'>
+              <p>
+                Your still haven't validate your email address. Please validate!!!
+              </p>
+            </Alert>
+          </Col>
+          : null
+        } 
+        {
+          this.props.isSignInError ?
+          <Col>
+            <Alert bsStyle='danger'>
+              <p>
+                { this.props.signInErrorMessage }
+              </p>
+            </Alert>
+          </Col>
+          : null
+        } 
+        <Col>
+          <form>
+            <FieldGroup id="formControlsEmail" type="email" label="Email address" placeholder="Enter email" onChange={this.handleEmailInput}/>
             <FieldGroup id="formControlsPassword" label="Password" type="password" placeholder="Enter password" onChange={this.handlePasswordInput}/>
-            <button type="button" className="btn btn-primary">
+            <button type="button" onClick={this.save} className="btn btn-primary">
               Sign In
             </button>
+            {
+              this.props.isLoading === true ? 'This is loading' : null
+            }
           </form>
-      </Row>
+        </Col>
+      </Col>  
     )
   }
 }
 
-export default SignUp;
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
